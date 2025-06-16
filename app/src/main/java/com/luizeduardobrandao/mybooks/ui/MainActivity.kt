@@ -23,6 +23,11 @@ class MainActivity : AppCompatActivity() {
         // 2. Define a raiz do binding como conteúdo da Activity
         setContentView(binding.root)
 
+        // chamando função de navegação
+        setUpNavigation()
+    }
+
+    private fun setUpNavigation(){
         // 3. Obtém a referência ao BottomNavigationView (barra inferior)
         val navView: BottomNavigationView = binding.navView
 
