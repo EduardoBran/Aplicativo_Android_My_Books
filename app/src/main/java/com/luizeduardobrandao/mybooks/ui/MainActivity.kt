@@ -29,6 +29,9 @@ class MainActivity : AppCompatActivity() {
         // 2. Define a raiz do binding como conteúdo da Activity
         setContentView(binding.root)
 
+        // Esconde a barra superior
+        supportActionBar?.hide()
+
         // Detectando as bordas do sistema ajusta o top e o bottom
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
