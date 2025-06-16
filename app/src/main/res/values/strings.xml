@@ -1,7 +1,7 @@
 <resources>
+
+    <!-- Nome do Aplicativo -->
     <string name="app_name">My Books</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
 
     <!-- Títulos das telas -->
     <string name="title_home">Home</string>
