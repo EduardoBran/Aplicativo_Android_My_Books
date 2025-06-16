@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.luizeduardobrandao.mybooks.ui.DashboardFragment"
+        android:name="com.luizeduardobrandao.mybooks.ui.FavoriteFragment"
         android:label="@string/title_favorites"
         tools:layout="@layout/fragment_dashboard" />
 
