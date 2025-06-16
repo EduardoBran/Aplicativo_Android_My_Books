@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity() {
             setOf(
                 R.id.navigation_home,           // HomeFragment
                 R.id.navigation_dashboard,      // DashboardFragment
-                R.id.navigation_notifications   // NotificationsFragment
             )
         )
 
