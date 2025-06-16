@@ -1,4 +1,4 @@
-package com.luizeduardobrandao.mybooks.ui.dashboard
+package com.luizeduardobrandao.mybooks.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.luizeduardobrandao.mybooks.databinding.FragmentDashboardBinding
+import com.luizeduardobrandao.mybooks.viewmodels.DashboardViewModel
 
 class DashboardFragment : Fragment() {
 

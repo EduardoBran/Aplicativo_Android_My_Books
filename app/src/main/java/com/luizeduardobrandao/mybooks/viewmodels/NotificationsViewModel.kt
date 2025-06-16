@@ -1,4 +1,4 @@
-package com.luizeduardobrandao.mybooks.ui.notifications
+package com.luizeduardobrandao.mybooks.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
