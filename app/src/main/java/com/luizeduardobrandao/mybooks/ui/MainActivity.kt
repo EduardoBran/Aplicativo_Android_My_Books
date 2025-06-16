@@ -1,8 +1,11 @@
 package com.luizeduardobrandao.mybooks.ui
 
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -18,10 +21,20 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // chamando o EdgeToEdge
+        enableEdgeToEdge()
+
         // 1. Infla o layout e inicializa o binding
         binding = ActivityMainBinding.inflate(layoutInflater)
         // 2. Define a raiz do binding como conteúdo da Activity
         setContentView(binding.root)
+
+        // Detectando as bordas do sistema ajusta o top e o bottom
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
 
         // chamando função de navegação
         setUpNavigation()
