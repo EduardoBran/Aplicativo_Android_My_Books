@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_home,           // HomeFragment
-                R.id.navigation_dashboard,      // DashboardFragment
+                R.id.navigation_favorite,      // DashboardFragment
             )
         )
 
