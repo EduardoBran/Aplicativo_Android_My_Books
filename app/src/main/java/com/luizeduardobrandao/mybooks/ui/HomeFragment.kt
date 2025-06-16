@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.luizeduardobrandao.mybooks.databinding.FragmentHomeBinding
 import com.luizeduardobrandao.mybooks.viewmodels.HomeViewModel
@@ -19,6 +20,10 @@ class HomeFragment : Fragment() {
     // (entre onCreateView e onDestroyView)
     private val binding get() = _binding!!
 
+    // 1) Obter o ViewModel associado a este Fragment
+    //    - ViewModelProvider(this) cria ou recupera um HomeViewModel atrelado ao ciclo de vida do Fragment
+    private val homeViewModel: HomeViewModel by viewModels()
+
     // Responsável por criar o layout
     override fun onCreateView(
         inflater: LayoutInflater,     // Inflater para criar a View a partir do XML
@@ -26,10 +31,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?   // Estado anterior, se houver
     ): View {
 
-        // 1) Obter o ViewModel associado a este Fragment
-        //    - ViewModelProvider(this) cria ou recupera um HomeViewModel atrelado ao ciclo de vida do Fragment
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+
 
         // 2) Inflar o layout usando ViewBinding
         //    - FragmentHomeBinding foi gerado automaticamente a partir de fragment_home.xml

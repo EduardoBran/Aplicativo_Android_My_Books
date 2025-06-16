@@ -19,7 +19,7 @@ class FavoriteFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    val favoriteViewModel: FavoriteViewModel by viewModels()
+    private val favoriteViewModel: FavoriteViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
