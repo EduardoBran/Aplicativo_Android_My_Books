@@ -37,25 +37,13 @@ class HomeFragment : Fragment() {
         //    - FragmentHomeBinding foi gerado automaticamente a partir de fragment_home.xml
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        //    - binding.root é a raiz do layout inflado
-        val root: View = binding.root
-
-        // 3) Obter referência ao TextView que exibirá o texto vindo do ViewModel
-        val textView: TextView = binding.textHome
-
-        // 4) Observar o LiveData<String> “text” no ViewModel
-        //    Sempre que “text” emitir um novo valor, este bloco será executado
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            // 5) Atualizar o conteúdo do TextView com o valor recebido
-            textView.text = it
-        }
-        // 6) Retornar a View raiz para que o sistema exiba o fragment
-        return root
+        // 3) Retornar a View raiz para que o sistema exiba o fragment
+        return binding.root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        // 7) Limpar o binding para evitar memory leaks
+        // 4) Limpar o binding para evitar memory leaks
         _binding = null
     }
 }
