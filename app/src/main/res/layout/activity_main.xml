@@ -34,14 +34,14 @@
 
 <!--
 
--> Elemento RecyclerView criado em fragment_home e fragment_favorite
+-> Elemento RecyclerView criado em fragment_home
 -> A lista de livros acontecerá em dois momentos (na home e em favorites)
     - Na home irá ter todos os livros.
     - Em favorite irá ter somente os livros favoritados.
 
 -> 3 Passos necessários para um RecyclerView nascer na HomeFragment
 
-    - 1. criação do Layout (criado em fragment_home e fragment_favorite)
+    - 1. criação do Layout (criado em fragment_home)
         1.1 criar mais um arquivo xml (dentro do diretório layout com nome de "item_book.xml")
             que será usado posteriormente na etapa 3.
 
