@@ -36,12 +36,12 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?   // Estado anterior, se houver
     ): View {
 
-        // 1) Infla o layout e inicializa o binding
-        binding.recyclerviewBooks.layoutManager = LinearLayoutManager(context)
-
-        // 2) Configura o LayoutManager da RecyclerView
+        // 1) Configura o LayoutManager da RecyclerView
         //    - LinearLayoutManager exibe itens em lista vertical
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+
+        // 2) Infla o layout e inicializa o binding
+        binding.recyclerviewBooks.layoutManager = LinearLayoutManager(context)
 
         // 3) Atribui o adapter à RecyclerView
         binding.recyclerviewBooks.adapter = adapter

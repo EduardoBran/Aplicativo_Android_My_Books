@@ -106,7 +106,9 @@
           atualiza os dados do adapter.
 
 
-     - Retornar a "BookViewHolder" e implementar o código da função "bind()" (responsável por atribuir os valores)
+     - Modificar "item_book.xml" para criação de um TextView com id e configurações padrões.
+     - Retornar a "BookViewHolder" e implementar o código da função "bind()"
+       (responsável por atribuir os valores)
 
 
 
