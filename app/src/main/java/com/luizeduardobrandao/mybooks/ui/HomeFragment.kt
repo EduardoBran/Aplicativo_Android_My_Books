@@ -13,46 +13,62 @@ import com.luizeduardobrandao.mybooks.databinding.FragmentHomeBinding
 import com.luizeduardobrandao.mybooks.ui.adapter.BookAdapter
 import com.luizeduardobrandao.mybooks.viewmodels.HomeViewModel
 
+// Fragmento responsável por exibir a lista de livros em uma RecyclerView.
+// Segue o padrão MVVM: observa dados no ViewModel e atualiza a UI automaticamente.
 class HomeFragment : Fragment() {
 
-    // Guarda a instância do binding de forma opcional
+    // Binding do layout gerado automaticamente a partir de fragment_home.xml
+    // _binding é nullable para permitir limpeza em onDestroyView()
     private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!              // acesso seguro entre onCreateView e onDestroyView
 
-    // Getter não-nulo para usar o binding dentro das chamadas de ciclo de vida válidas
-    // (entre onCreateView e onDestroyView)
-    private val binding get() = _binding!!
-
-    // 1) Obter o ViewModel associado a este Fragment
-    //    - ViewModelProvider(this) cria ou recupera um HomeViewModel atrelado ao ciclo de vida do Fragment
+    // ViewModel do fragmento, criado uma única vez e atrelado ao ciclo de vida do Fragment
     private val homeViewModel: HomeViewModel by viewModels()
 
-    // adapter para RecyclerView
+    // Adapter que gerencia itens da RecyclerView (BookAdapter lida com a exibição de BookEntity)
     private val adapter: BookAdapter = BookAdapter()
 
-    // Responsável por criar o layout
+    // Chamado para criar a interface do fragmento.
+    // Aqui configuramos ViewBinding, RecyclerView e observadores.
     override fun onCreateView(
         inflater: LayoutInflater,     // Inflater para criar a View a partir do XML
         container: ViewGroup?,        // Container pai que irá receber este Fragment
         savedInstanceState: Bundle?   // Estado anterior, se houver
     ): View {
 
-        // 3) atribuição do layout de recycle view e dizer como se comporta
+        // 1) Infla o layout e inicializa o binding
         binding.recyclerviewBooks.layoutManager = LinearLayoutManager(context)
 
-        // 4) Inflar o layout usando ViewBinding
-        //    - FragmentHomeBinding foi gerado automaticamente a partir de fragment_home.xml
+        // 2) Configura o LayoutManager da RecyclerView
+        //    - LinearLayoutManager exibe itens em lista vertical
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        // instanciando o adapter
+        // 3) Atribui o adapter à RecyclerView
         binding.recyclerviewBooks.adapter = adapter
 
-        // 5) Retornar a View raiz para que o sistema exiba o fragment
+        // 4) Solicita ao ViewModel que busque todos os livros
+        homeViewModel.getAllBooks()
+
+        // 5) Define observadores para reagir a mudanças nos dados
+        setObservers()
+
+        // 6) Retorna a raiz inflada para ser exibida
         return binding.root
     }
 
+    // Quando a view do fragmento é destruída, limpamos o binding para evitar vazamentos de memória.
     override fun onDestroyView() {
         super.onDestroyView()
-        // 6) Limpar o binding para evitar memory leaks
         _binding = null
+    }
+
+    // Observa o LiveData<List<BookEntity>> exposto pelo ViewModel
+    // Sempre que a lista de livros for atualizada, atualiza os dados do adapter
+    private fun setObservers() {
+
+        // Atualiza a lista de livros exibida pela RecyclerView
+        homeViewModel.books.observe(viewLifecycleOwner){
+            adapter.updateBooks(it)
+        }
     }
 }

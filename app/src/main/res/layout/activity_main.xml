@@ -97,6 +97,15 @@
              pois agora eles tem uma lista preenchida.
 
 
+     - Ir em "HomeViewModel", modificar "_text" para retornar lista de "BookEntity"
+        - Criar função "getAllBooks()" para retornar todos os livros
+
+     - Ir em "HomeFragment" para conseguir atualizar os livros no Layout chamando "getAllBooks()"
+        - Solicitar a "homeViewModel" que busque todos os livros
+        - Criar função "setObservers()" para sempre que a lista de livros for atualizada,
+          atualiza os dados do adapter.
+
+
      - Retornar a "BookViewHolder" e implementar o código da função "bind()" (responsável por atribuir os valores)
 
 
