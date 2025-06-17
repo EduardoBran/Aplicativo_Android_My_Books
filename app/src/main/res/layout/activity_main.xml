@@ -46,12 +46,12 @@
             que será usado posteriormente na etapa 3.
 
 
-    - 2. identificação e atribuição no código (HomeFragment e FavoriteFragment) para dizer como a
+    - 2. identificação e atribuição no código (HomeFragment) para dizer como a
       RecyclerView irá se comportar (recuperando id com binding)
             - "binding.recyclerviewbooks.layoutManager = LinearLayoutManager(context)"
 
 
-    - 3. ainda no código (HomeFragment e FavoriteFragment) é necessário um "adapter" que é que irá
+    - 3. ainda no código (HomeFragment) é necessário um "adapter" que é que irá
       fazer a conexão com a lista de livros (BookRepository) com o layout. Para isso é necessário
       a criação de uma nova classe (criar pacote "adapter" dentro do pacote "ui" e classe com nome de "BookAdapter").
 

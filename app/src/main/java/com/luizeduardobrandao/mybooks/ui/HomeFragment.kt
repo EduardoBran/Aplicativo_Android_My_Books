@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.luizeduardobrandao.mybooks.databinding.FragmentHomeBinding
+import com.luizeduardobrandao.mybooks.ui.adapter.BookAdapter
 import com.luizeduardobrandao.mybooks.viewmodels.HomeViewModel
 
 class HomeFragment : Fragment() {
@@ -25,6 +26,9 @@ class HomeFragment : Fragment() {
     //    - ViewModelProvider(this) cria ou recupera um HomeViewModel atrelado ao ciclo de vida do Fragment
     private val homeViewModel: HomeViewModel by viewModels()
 
+    // adapter para RecyclerView
+    private val adapter: BookAdapter = BookAdapter()
+
     // Responsável por criar o layout
     override fun onCreateView(
         inflater: LayoutInflater,     // Inflater para criar a View a partir do XML
@@ -38,6 +42,9 @@ class HomeFragment : Fragment() {
         // 4) Inflar o layout usando ViewBinding
         //    - FragmentHomeBinding foi gerado automaticamente a partir de fragment_home.xml
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+
+        // instanciando o adapter
+        binding.recyclerviewBooks.adapter = adapter
 
         // 5) Retornar a View raiz para que o sistema exiba o fragment
         return binding.root
