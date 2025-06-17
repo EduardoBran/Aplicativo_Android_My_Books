@@ -30,5 +30,7 @@ class BookAdapter: RecyclerView.Adapter<BookViewHolder>() {
     // É responsável por atualizar/preencher a variável bookList
     fun updateBooks(list: List<BookEntity>) {
         bookList = list
+        // força o adapter a atualizar a sua lista.
+        notifyDataSetChanged()
     }
 }
