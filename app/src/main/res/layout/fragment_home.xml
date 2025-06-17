@@ -6,17 +6,53 @@
     android:layout_height="match_parent"
     tools:context=".ui.HomeFragment">
 
-    <TextView
-        android:id="@+id/text_home"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--
+
+*** RecyclerView ***
+
+RecyclerView é um componente flexível e eficiente para exibir listas (ou grades) grandes de itens roláveis em Android.
+Ele substitui o antigo ListView oferecendo melhor desempenho, mais possibilidades de customização e fácil extensão.
+
+-> Importante: usar o "androiddx.recyclerview.widget.RecyclerView"
+
+- 1. Quando Usar
+
+    - Listas longas ou dinâmicas: grande quantidade de itens que podem mudar em tempo de execução.
+    - Layouts variados: quando cada item precisa de um layout próprio ou múltiplos tipos de item.
+    - Grids ou carrosséis: com diferentes LayoutManager (grid, linear, horizontal, etc.).
+    - Animações e efeitos de deslize: RecyclerView integra bem com ItemAnimator e ItemTouchHelper.
+
+- 2. Para que usar
+
+    - Reuso de views: somente as views visíveis são criadas; as demais são recicladas quando saem da tela,
+      economizando memória e processamento.
+    - Customização de layout: você controla exatamente como cada item é inflado e disposto.
+    - Desempenho: graças ao padrão ViewHolder, evita chamadas repetitivas a findViewById.
+    - Extensibilidade: suporta decoradores (divisórias, espaços), animações de inserção/remoção, diferentes gerenciadores de posicionamento.
+
+- 3. Boas práticas
+
+    - setHasFixedSize(true): indique quando o conteúdo não altera o tamanho do RecyclerView, melhorando performance.
+    - DiffUtil: para atualizar listas dinamicamente com animações suaves.
+    - Click listeners: passe callbacks para o Adapter em vez de manipulá-los diretamente na Activity.
+    - Multiple View Types: use getItemViewType() se precisar de diferentes layouts de item.
+
+
+- 4. Resumo
+
+ - Quando Usar: sempre que precisar exibir listas/grids grandes ou customizadas.
+
+ - Para que: performance, reuso de views, flexibilidade de layout e animações.
+
+ - Como Usar:
+
+    - Adicione a dependência.
+    - Declare RecyclerView no XML.
+    - Crie o layout de cada item.
+    - Implemente Adapter e ViewHolder.
+    - No código, defina LayoutManager, Adapter e, opcionalmente, decoradores.
+
+Com esses passos, você terá um componente de lista robusto, performático e altamente customizável!
+-->

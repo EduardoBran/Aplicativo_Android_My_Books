@@ -30,3 +30,67 @@
         app:navGraph="@navigation/mobile_navigation" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+<!--
+
+-> Elemento RecyclerView criado em fragment_home e fragment_favorite
+-> A lista de livros acontecerá em dois momentos (na home e em favorites)
+    - Na home irá ter todos os livros.
+    - Em favorite irá ter somente os livros favoritados.
+
+-> 3 Passos necessários para um RecyclerView nascer na HomeFragment
+
+    - 1. criação do Layout (criado em fragment_home e fragment_favorite)
+        1.1 criar mais um arquivo xml (dentro do diretório layout com nome de "item_book.xml")
+            que será usado posteriormente na etapa 3.
+
+
+    - 2. identificação e atribuição no código (HomeFragment e FavoriteFragment) para dizer como a
+      RecyclerView irá se comportar (recuperando id com binding)
+            - "binding.recyclerviewbooks.layoutManager = LinearLayoutManager(context)"
+
+
+    - 3. ainda no código (HomeFragment e FavoriteFragment) é necessário um "adapter" que é que irá
+      fazer a conexão com a lista de livros (BookRepository) com o layout. Para isso é necessário
+      a criação de uma nova classe (criar pacote "adapter" dentro do pacote "ui" e classe com nome de "BookAdapter").
+
+    - Em "BookAdapter" é necessário extender a classe RecyclerView.Adapter que irá precisar de uma classe
+      ViewHolder (criar pacote "viewholder" dentro de "ui" e classe com o nome de "BookViewHolder")
+
+    - Em "BookViewHolder" também é necessário extender RecyclerView.ViewHolder que espera receber uma View (layout)
+        - Ainda na classe "BookViewHolder" retornar o layout criado ("item_book.xml").
+
+    - Voltando em "BookAdapter" precista retornar o "BookViewHolder" criado anteriormente chamando o
+       construtor e implementar os métodos automaticamente.
+      - onCreateViewHolder é responsável por criar o elemento de layout
+      - getItemCount retorna quantos elementos existem na Recycler View
+      - onBindViewHolder é responsável por atribuir/obter os valores dos atributos (livros) para o layout
+
+      - Retornar o adapter em "HomeFragment"
+        - fora do "onCreateView" criar "private val adapter: BookAdapter = BookAdapter()
+        - dentro de "onCreateView" chamar o binding.recyclerviewBooks.adapter = adapter"
+
+
+    - Retornar a "BookViewHolder" e criar um mét0do para atribuição dos elementos (função "bind")
+      que será usado em "onBindViewCount" da classe "BookAdapter".
+
+    - Voltando em "BookAdapter" retornar a lista de livros com uma variável
+        - criacao da variável "private val bookList = mutableListOf<BookEntity>()"
+
+        - Retonar em getItemCount o tamanho da lista com "return bookList.size"
+
+        - Retornar em onBindViewCount a função "bind" criado em "BookViewHolder"
+            "holder.bind(bookList[position])"
+
+        - Retornar em onCreateViewHolder o layout de forma parecida que ja tem em "HomeFragment"
+            - criar uma variável view chamando o xml "item_book" com "val view = ItemBookBindind.inflate()"
+                "val view = ItemBookBinding.inflate(LayoutInflater.from(parent.context), parent, false)"
+            - retornar o "BookViewHolder(view)"
+                "return BookViewHolder(view)"
+
+     - Retornar a "BookViewHolder" e implementar o código da função "bind()" (responsável por atribuir os valores)
+
+
+
+-->
