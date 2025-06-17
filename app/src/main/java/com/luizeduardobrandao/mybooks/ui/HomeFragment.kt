@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.luizeduardobrandao.mybooks.databinding.FragmentHomeBinding
 import com.luizeduardobrandao.mybooks.viewmodels.HomeViewModel
 
@@ -31,19 +32,20 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?   // Estado anterior, se houver
     ): View {
 
+        // 3) atribuição do layout de recycle view e dizer como se comporta
+        binding.recyclerviewBooks.layoutManager = LinearLayoutManager(context)
 
-
-        // 2) Inflar o layout usando ViewBinding
+        // 4) Inflar o layout usando ViewBinding
         //    - FragmentHomeBinding foi gerado automaticamente a partir de fragment_home.xml
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        // 3) Retornar a View raiz para que o sistema exiba o fragment
+        // 5) Retornar a View raiz para que o sistema exiba o fragment
         return binding.root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        // 4) Limpar o binding para evitar memory leaks
+        // 6) Limpar o binding para evitar memory leaks
         _binding = null
     }
 }
