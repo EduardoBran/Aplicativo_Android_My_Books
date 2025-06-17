@@ -9,7 +9,7 @@ import com.luizeduardobrandao.mybooks.ui.viewholder.BookViewHolder
 
 class BookAdapter: RecyclerView.Adapter<BookViewHolder>() {
 
-    private val bookList = mutableListOf<BookEntity>()
+    private var bookList: List<BookEntity> = listOf()
 
     // É responsável por criar o elemento de layout
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
@@ -25,5 +25,10 @@ class BookAdapter: RecyclerView.Adapter<BookViewHolder>() {
     // É responsável por atribuir/obter os valores dos atributos (livros) para o layout
     override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
         holder.bind(bookList[position])
+    }
+
+    // É responsável por atualizar/preencher a variável bookList
+    fun updateBooks(list: List<BookEntity>) {
+        bookList = list
     }
 }

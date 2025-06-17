@@ -77,7 +77,7 @@
 
 
     - Voltando em "BookAdapter" retornar a lista de livros com uma variável
-        - criacao da variável "private val bookList = mutableListOf<BookEntity>()"
+        - criacao da variável "private var bookList: List<BookEntity> = listOf()"
 
         - Retonar em getItemCount o tamanho da lista com "return bookList.size"
 
@@ -89,6 +89,13 @@
                 "val view = ItemBookBinding.inflate(LayoutInflater.from(parent.context), parent, false)"
             - retornar o "BookViewHolder(view)"
                 "return BookViewHolder(view)"
+
+
+     - Ainda em "BookAdapter" criar uma função "updateBooks(list: List<BookEntity>)" para atualizar os
+       livros e assim preencher a variável "bookList".
+           - E assim os métodos "onCreateViewHolder", "getItemCount" e "onBindViewHolder" irão funcionar
+             pois agora eles tem uma lista preenchida.
+
 
      - Retornar a "BookViewHolder" e implementar o código da função "bind()" (responsável por atribuir os valores)
 
