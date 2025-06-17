@@ -72,8 +72,9 @@
         - dentro de "onCreateView" chamar o binding.recyclerviewBooks.adapter = adapter"
 
 
-    - Retornar a "BookViewHolder" e criar um mét0do para atribuição dos elementos (função "bind")
-      que será usado em "onBindViewCount" da classe "BookAdapter".
+    - Retornar a "BookViewHolder" e criar um mét0do ainda sem implementação para atribuição dos
+      elementos (função "bind") que será usado em "onBindViewCount" da classe "BookAdapter".
+
 
     - Voltando em "BookAdapter" retornar a lista de livros com uma variável
         - criacao da variável "private val bookList = mutableListOf<BookEntity>()"
