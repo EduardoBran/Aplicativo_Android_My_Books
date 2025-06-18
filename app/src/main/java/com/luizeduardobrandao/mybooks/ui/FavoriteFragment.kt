@@ -61,9 +61,21 @@ class FavoriteFragment : Fragment() {
 
     private fun setObservers() {
 
-        // Atualiza a lista de livros exibida pela RecyclerView
+        // Atualiza a lista de livros favoritos exibida pela RecyclerView
         favoriteViewModel.books.observe(viewLifecycleOwner){
-            adapter.updateBooks(it)
+
+            // verificação para ver se lista esta vazia
+            if (it.isEmpty()){
+                binding.recyclerviewBooksFavorite.visibility = View.GONE // deixando a recycler view invisível
+                binding.textviewNoBooks.visibility = View.VISIBLE        // deixando texto visível
+                binding.imageviewNoBooks.visibility = View.VISIBLE       // deixando imagem visível
+            }
+            else {
+                binding.recyclerviewBooksFavorite.visibility = View.VISIBLE // deixando a recycler view visível
+                binding.textviewNoBooks.visibility = View.GONE              // deixando texto invisível
+                binding.imageviewNoBooks.visibility = View.GONE             // deixando imagem invisível
+                adapter.updateBooks(it)                                     // exibe os livros
+            }
         }
     }
 
