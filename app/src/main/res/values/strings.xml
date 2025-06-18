@@ -9,7 +9,7 @@
     <string name="title_book_details">Detalhes</string>
 
     <!-- Mensagens dos diálogos -->
-    <string name="dialog_message_delete_item">Tem certeza de que deseja excluir este item?</string>
+    <string name="dialog_message_delete_item">Tem certeza de que deseja excluir este livro?</string>
     <string name="dialog_positive_button_yes">Sim</string>
     <string name="dialog_negative_button_no">Não</string>
 
