@@ -9,7 +9,7 @@ import com.luizeduardobrandao.mybooks.repository.BookRepository
 class DetailsViewModel : ViewModel() {
 
     // variável usada para recuperar o valor do id do livro
-    private  val repository: BookRepository = BookRepository()
+    private  val repository: BookRepository = BookRepository.getInstance()
 
     // variável para atribuir o valor do id para um item que pode ser observado
     private val _book = MutableLiveData<BookEntity>()

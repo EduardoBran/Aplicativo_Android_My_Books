@@ -16,7 +16,7 @@ class HomeViewModel : ViewModel() {
     val books: LiveData<List<BookEntity>> = _books
 
     // Instância do repositório que fornece os dados (fonte única de verdade)
-    private val repository = BookRepository()
+    private val repository = BookRepository.getInstance()
 
     // Chamada pela UI (HomeFragment) para carregar todos os livros.
     // Ao final, atualiza _books, disparando a notificação a qualquer observador.

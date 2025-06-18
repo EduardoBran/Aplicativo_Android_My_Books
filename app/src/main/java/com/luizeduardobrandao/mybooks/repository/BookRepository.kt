@@ -4,7 +4,7 @@ import com.luizeduardobrandao.mybooks.entity.BookEntity
 
 // Classe responsável por armazenar e manipular os livros.
 // (Simula um banco de dados local usando uma lista mutável.)
-class BookRepository {
+class BookRepository private constructor() {
 
     // Lista mutável que armazena os livros
     private val books = mutableListOf<BookEntity>()
@@ -12,6 +12,20 @@ class BookRepository {
     // Popula o repositório com os 10 livros iniciais
     init {
         books.addAll(getInitialBooks())
+    }
+
+    // Padrão Singleton ("synchronized" previne que duas requisições cheguem ao mesmo tempo)
+    companion object {
+        private lateinit var instance: BookRepository
+
+        fun getInstance(): BookRepository {
+            synchronized(this) {
+                if (!::instance.isInitialized){
+                    instance = BookRepository()
+                }
+            }
+            return instance
+        }
     }
 
     // Cria uma lista inicial de livros para popular o repositório
@@ -162,3 +176,19 @@ class BookRepository {
         return books.removeIf { it.id == id }
     }
 }
+
+/*
+
+*** Padrão Singleton
+
+Em Kotlin, Singleton é um padrão de projeto que garante que uma classe tenha apenas uma única
+instância em toda a aplicação e fornece um ponto global de acesso a ela.
+
+- Por que usar Singleton?
+    - Estado compartilhado: quando você precisa manter dados ou configurações que devem ser os
+      mesmos em todas as telas.
+    - Repositórios (em MVVM): por exemplo, um único objeto que faz todas as chamadas de rede ou
+      acesso a banco de dados.
+    - Economia de recursos: evita criar múltiplos objetos pesados desnecessariamente.
+
+ */
