@@ -27,6 +27,9 @@ class DetailsFragment : Fragment() {
 
         _binding = FragmentDetailsBinding.inflate(inflater, container, false)
 
+        // Reage aos listenners
+        setListeners()
+
         // Define observadores para reagir a mudanças nos dados
         setObservers()
 
@@ -55,6 +58,15 @@ class DetailsFragment : Fragment() {
             binding.textviewAuthorValue.text = it.author
             binding.textviewGenreValue.text = it.genre
             binding.checkboxFavorite.isChecked = it.favorite
+        }
+    }
+
+    // Função para reagir aos listeners
+    private fun setListeners(){
+
+        // implementando lógica do botão de voltar (também serve para arrastar o dedo para voltar)
+        binding.imageviewBack.setOnClickListener{
+            requireActivity().supportFragmentManager.popBackStack()
         }
     }
 }
