@@ -3,11 +3,31 @@ package com.luizeduardobrandao.mybooks.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.luizeduardobrandao.mybooks.entity.BookEntity
+import com.luizeduardobrandao.mybooks.repository.BookRepository
 
 class FavoriteViewModel : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
+    // _books é o MutableLiveData interno, permitimos mutação apenas aqui
+    private val _books = MutableLiveData<List<BookEntity>>()
+    // books é o LiveData público, somente leitura para a UI observar
+    val books: LiveData<List<BookEntity>> = _books
+
+    // Instância do repositório que fornece os dados (fonte única de verdade)
+    private val repository = BookRepository.getInstance()
+
+    // Chamada pela UI (HomeFragment) para carregar os livros favoritos.
+    // Ao final, atualiza _books, disparando a notificação a qualquer observador.
+    fun getFavoriteBooks() {
+
+        // Busca a lista de livros no repositório
+        val lista = repository.getFavoriteBooks()
+        // Atribui ao LiveData interno, acionando observers na UI
+        _books.value = lista
     }
-    val text: LiveData<String> = _text
+
+    // Função para favoritar um livro sem observer()
+    fun favorite(id: Int) {
+        repository.toggleFavoriteStatus(id)
+    }
 }
