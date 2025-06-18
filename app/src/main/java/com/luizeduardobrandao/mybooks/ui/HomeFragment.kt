@@ -8,9 +8,12 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.luizeduardobrandao.mybooks.R
 import com.luizeduardobrandao.mybooks.databinding.FragmentHomeBinding
 import com.luizeduardobrandao.mybooks.ui.adapter.BookAdapter
+import com.luizeduardobrandao.mybooks.ui.listener.BookListener
 import com.luizeduardobrandao.mybooks.viewmodels.HomeViewModel
 
 // Fragmento responsável por exibir a lista de livros em uma RecyclerView.
@@ -46,13 +49,16 @@ class HomeFragment : Fragment() {
         // 3) Atribui o adapter à RecyclerView
         binding.recyclerviewBooks.adapter = adapter
 
-        // 4) Solicita ao ViewModel que busque todos os livros
+        // 4) Função para Navegação
+        attachListener()
+
+        // 5) Solicita ao ViewModel que busque todos os livros
         homeViewModel.getAllBooks()
 
-        // 5) Define observadores para reagir a mudanças nos dados
+        // 6) Define observadores para reagir a mudanças nos dados
         setObservers()
 
-        // 6) Retorna a raiz inflada para ser exibida
+        // 7) Retorna a raiz inflada para ser exibida
         return binding.root
     }
 
@@ -71,4 +77,36 @@ class HomeFragment : Fragment() {
             adapter.updateBooks(it)
         }
     }
+
+    // Função para navegação  (clicar em object para implementar os membros)
+    private fun attachListener() {
+        adapter.attachListener(object: BookListener{
+            override fun onClick(id: Int) {
+
+                // navegação
+                findNavController().navigate(R.id.navigation_details)
+            }
+
+        })
+    }
 }
+
+/*
+
+*** Navegação
+
+- 1. Começar por "BookViewHolder" criando o "setOnClickListener()"
+- 2. Criar variável "bookListener" e função "attachListement" em "BookAdapter"
+- 3. Criar e chamar função "attachListement" aqui em "HomeFragment"
+- 4. Dentro de "attachListenent() / "onClick" usar mét0do de navegação "findNavController().navigate()"
+     e passar "R.id.navigation_details" que foi criado em "mobile_navigation"
+
+* Explicando
+
+- função "attachListener" é chamado dentro de onCreateView e é passado por
+  parâmetro para "BookAdapter"
+- o "BookAdapter" passa a "BookViewHolder"
+- o "BookViewHolder" recebe o código e quando houver um clique no item "textviewTitle" dispara o
+  "listenner.onClick()" que será chamado aqui em "HomeFragment" com "onClick" de "attachListener()"
+
+ */

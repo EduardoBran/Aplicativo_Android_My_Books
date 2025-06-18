@@ -5,16 +5,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.luizeduardobrandao.mybooks.databinding.ItemBookBinding
 import com.luizeduardobrandao.mybooks.entity.BookEntity
+import com.luizeduardobrandao.mybooks.ui.listener.BookListener
 import com.luizeduardobrandao.mybooks.ui.viewholder.BookViewHolder
 
 class BookAdapter: RecyclerView.Adapter<BookViewHolder>() {
 
     private var bookList: List<BookEntity> = listOf()
+    private lateinit var bookListener: BookListener
 
     // É responsável por criar o elemento de layout
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
         val view = ItemBookBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return BookViewHolder(view)
+        return BookViewHolder(view, bookListener)
     }
 
     // Retorna quantos elementos existem na Recycler View
@@ -32,5 +34,10 @@ class BookAdapter: RecyclerView.Adapter<BookViewHolder>() {
         bookList = list
         // força o adapter a atualizar a sua lista.
         notifyDataSetChanged()
+    }
+
+    // Conexão com o listener
+    fun attachListener(listener: BookListener){
+        bookListener = listener
     }
 }

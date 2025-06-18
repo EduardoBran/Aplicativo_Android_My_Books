@@ -1,17 +1,28 @@
 package com.luizeduardobrandao.mybooks.ui.viewholder
 
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.luizeduardobrandao.mybooks.R
 import com.luizeduardobrandao.mybooks.databinding.ItemBookBinding
 import com.luizeduardobrandao.mybooks.entity.BookEntity
+import com.luizeduardobrandao.mybooks.ui.listener.BookListener
 
-class BookViewHolder(private val item: ItemBookBinding): RecyclerView.ViewHolder(item.root) {
+class BookViewHolder(private val item: ItemBookBinding, private val listener: BookListener): RecyclerView.ViewHolder(item.root) {
 
     // Função para implementação da lista de valores dos elementos (livros)
     fun bind(book: BookEntity){
         item.textviewTitle.text = book.title
         item.textviewAuthor.text = book.author
         item.textviewGenre.text = book.genre
+
+        // Navegação para fragment DetailsFragment (clicar em object para implementar os membros)
+        item.textviewTitle.setOnClickListener(object: View.OnClickListener{
+            override fun onClick(v: View?) {
+                // chama onClick passando o id do livro
+                listener.onClick(book.id)
+            }
+
+        })
 
         setGenreBackground(book.genre)
         updateFavoriteIcon(book.favorite)
