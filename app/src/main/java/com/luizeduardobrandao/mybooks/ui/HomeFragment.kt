@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.luizeduardobrandao.mybooks.R
 import com.luizeduardobrandao.mybooks.databinding.FragmentHomeBinding
+import com.luizeduardobrandao.mybooks.helper.BookConstants
 import com.luizeduardobrandao.mybooks.ui.adapter.BookAdapter
 import com.luizeduardobrandao.mybooks.ui.listener.BookListener
 import com.luizeduardobrandao.mybooks.viewmodels.HomeViewModel
@@ -83,8 +84,12 @@ class HomeFragment : Fragment() {
         adapter.attachListener(object: BookListener{
             override fun onClick(id: Int) {
 
+                // navegação passando o ID do livro como parametro
+                val bundle = Bundle()
+                bundle.putInt(BookConstants.KEY.BOOK_ID, id)
+
                 // navegação
-                findNavController().navigate(R.id.navigation_details)
+                findNavController().navigate(R.id.navigation_details, bundle)
             }
 
         })
