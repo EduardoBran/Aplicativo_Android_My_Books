@@ -53,14 +53,17 @@ class HomeFragment : Fragment() {
         // 4) Função para Navegação
         attachListener()
 
-        // 5) Solicita ao ViewModel que busque todos os livros
-        homeViewModel.getAllBooks()
-
         // 6) Define observadores para reagir a mudanças nos dados
         setObservers()
 
         // 7) Retorna a raiz inflada para ser exibida
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // 5) Solicita ao ViewModel que busque todos os livros
+        homeViewModel.getAllBooks()
     }
 
     // Quando a view do fragmento é destruída, limpamos o binding para evitar vazamentos de memória.
