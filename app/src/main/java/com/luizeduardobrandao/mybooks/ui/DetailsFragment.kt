@@ -91,6 +91,14 @@ class DetailsFragment : Fragment() {
 
         // Botão "Remover livro" usando função "handleMove()"
         binding.buttonRemove.setOnClickListener { handleRemove() }
+
+        // Checkbox para favoritar livro usando função "handleFavorite()"
+        binding.checkboxFavorite.setOnClickListener { handleFavorite() }
+    }
+
+    // Função para favoritar um Livro usando função "favorite()" de "DetailsViewModel"
+    private fun handleFavorite() {
+        viewModel.favorite(bookId)
     }
 
     // Função para remover livro usando AlertDialog e função "deleteBook()" de "DetailsViewModel"

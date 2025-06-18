@@ -29,4 +29,9 @@ class DetailsViewModel : ViewModel() {
     fun deleteBook(id: Int){
         _bookRemove.value = repository.deleteBook(id)
     }
+
+    // Função para favoritar um livro sem observer()
+    fun favorite(id: Int) {
+        repository.toggleFavoriteStatus(id)
+    }
 }
