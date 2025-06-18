@@ -32,9 +32,9 @@ class BookRepository private constructor() {
     private fun getInitialBooks(): List<BookEntity> {
 
         return listOf(
-            BookEntity(1, "To Kill a Mockingbird", "Harper Lee", true, "Ficção"),
+            BookEntity(1, "To Kill a Mockingbird", "Harper Lee", false, "Ficção"),
             BookEntity(2, "Dom Casmurro", "Machado de Assis", false, "Romance"),
-            BookEntity(3, "O Hobbit", "J.R.R. Tolkien", true, "Fantasia"),
+            BookEntity(3, "O Hobbit", "J.R.R. Tolkien", false, "Fantasia"),
             BookEntity(4, "Senhor dos Anéis", "J.R.R. Tolkien", false, "Fantasia"),
             BookEntity(5, "O Pequeno Príncipe", "Antoine de Saint-Exupéry", false, "Fantasia"),
             BookEntity(6, "Crime e Castigo", "Fiódor Dostoiévski", false, "Ficção"),
@@ -52,7 +52,7 @@ class BookRepository private constructor() {
             BookEntity(18, "Orgulho e Preconceito", "Jane Austen", false, "Romance"),
             BookEntity(19, "As Crônicas de Nárnia", "C.S. Lewis", false, "Fantasia"),
             BookEntity(20, "O Código Da Vinci", "Dan Brown", false, "Mistério"),
-            BookEntity(21, "Moby Dick", "Herman Melville", true, "Aventura"),
+            BookEntity(21, "Moby Dick", "Herman Melville", false, "Aventura"),
             BookEntity(22, "O Nome do Vento", "Patrick Rothfuss", false, "Fantasia"),
             BookEntity(23, "O Conde de Monte Cristo", "Alexandre Dumas", false, "Aventura"),
             BookEntity(24, "Os Miseráveis", "Victor Hugo", false, "Romance"),
@@ -70,7 +70,7 @@ class BookRepository private constructor() {
             BookEntity(36, "Drácula de Bram Stoker", "Bram Stoker", false, "Ficção"),
             BookEntity(37, "Hamlet", "William Shakespeare", false, "Ficção"),
             BookEntity(38, "Macbeth", "William Shakespeare", false, "Ficção"),
-            BookEntity(39, "O Sol é para Todos", "Harper Lee", true, "Ficção"),
+            BookEntity(39, "O Sol é para Todos", "Harper Lee", false, "Ficção"),
             BookEntity(40, "O Nome da Rosa", "Umberto Eco", false, "Mistério"),
             BookEntity(41, "A Metamorfose", "Franz Kafka", false, "Ficção"),
             BookEntity(42, "Cem Anos de Solidão – Edição Especial", "Gabriel García Márquez", false, "Ficção"),
