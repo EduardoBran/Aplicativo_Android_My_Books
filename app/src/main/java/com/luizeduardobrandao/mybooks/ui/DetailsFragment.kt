@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.luizeduardobrandao.mybooks.viewmodels.DetailsViewModel
 import com.luizeduardobrandao.mybooks.databinding.FragmentDetailsBinding
+import com.luizeduardobrandao.mybooks.helper.BookConstants
 
 class DetailsFragment : Fragment() {
 
@@ -16,12 +17,25 @@ class DetailsFragment : Fragment() {
 
     private val viewModel: DetailsViewModel by viewModels()
 
+    // Variável para recuperação de valor passado como informação (Id do Livro)
+    private var bookId = 0
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
         _binding = FragmentDetailsBinding.inflate(inflater, container, false)
+
+        // Define observadores para reagir a mudanças nos dados
+        setObservers()
+
+        // Recuperando dados passado como informação (id do livro)
+        bookId = arguments?.getInt(BookConstants.KEY.BOOK_ID) ?: 0
+        // Chamando metodo criado em "DetailsViewModel" para usar viewModel
+        // e recuperar o valor passado (id do livro)
+        viewModel.getBooksById(bookId)
+
 
         return binding.root
     }
@@ -30,5 +44,17 @@ class DetailsFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    // Observa o LiveData exposto pelo ViewModel através de "getBooksId()" de "DetailsViewModel"
+    private fun setObservers(){
+        // itens que serão observados
+        viewModel.book.observe(viewLifecycleOwner){
+            // o que acontece quando receber o id
+            binding.textviewTitle.text = it.title
+            binding.textviewAuthorValue.text = it.author
+            binding.textviewGenreValue.text = it.genre
+            binding.checkboxFavorite.isChecked = it.favorite
+        }
     }
 }
