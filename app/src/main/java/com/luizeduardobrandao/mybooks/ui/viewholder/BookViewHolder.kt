@@ -16,13 +16,14 @@ class BookViewHolder(private val item: ItemBookBinding, private val listener: Bo
         item.textviewGenre.text = book.genre
 
         // Navegação para fragment DetailsFragment (clicar em object para implementar os membros)
-        item.textviewTitle.setOnClickListener(object: View.OnClickListener{
-            override fun onClick(v: View?) {
-                // chama onClick passando o id do livro
-                listener.onClick(book.id)
-            }
+        item.textviewTitle.setOnClickListener { // chama onClick passando o id do livro
+            listener.onClick(book.id)
+        }
 
-        })
+        // Favoritar livro em HomeFragment (botão favoritar)
+        item.imageviewFavorite.setOnClickListener {
+            listener.onFavoriteClick(book.id)
+        }
 
         setGenreBackground(book.genre)
         updateFavoriteIcon(book.favorite)

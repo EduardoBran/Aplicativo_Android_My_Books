@@ -27,4 +27,9 @@ class HomeViewModel : ViewModel() {
         // Atribui ao LiveData interno, acionando observers na UI
         _books.value = lista
     }
+
+    // Função para favoritar um livro sem observer()
+    fun favorite(id: Int) {
+        repository.toggleFavoriteStatus(id)
+    }
 }

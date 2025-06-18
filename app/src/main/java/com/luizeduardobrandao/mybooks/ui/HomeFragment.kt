@@ -95,6 +95,13 @@ class HomeFragment : Fragment() {
                 findNavController().navigate(R.id.navigation_details, bundle)
             }
 
+            override fun onFavoriteClick(id: Int) {
+                // clique para favoritar o livro
+                homeViewModel.favorite(id)
+                // atualiza a listagem com o livro marcado como favorito
+                homeViewModel.getAllBooks()
+            }
+
         })
     }
 }
