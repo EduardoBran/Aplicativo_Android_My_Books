@@ -1,5 +1,6 @@
 package com.luizeduardobrandao.mybooks.repository
 
+import android.content.ContentValues
 import android.content.Context
 import com.luizeduardobrandao.mybooks.entity.BookEntity
 import com.luizeduardobrandao.mybooks.helper.DatabaseConstants
@@ -148,12 +149,23 @@ class BookRepository private constructor(context: Context) {
 
     // Alterna entre true e false o atributo 'favorite'
     fun toggleFavoriteStatus(id: Int) {
-        val book = books.find {it.id == id}
+        val book = getBookById(id)
+        val newFavoriteStatus = if(book?.favorite == true) 0 else 1
 
-        if (book != null){
-            book.favorite = !book.favorite    // Alterna entre true e false
+        // atualizando
+        val db = database.writableDatabase
+        val values = ContentValues().apply {
+            put(DatabaseConstants.BOOK.COLUMNS.FAVORITE, newFavoriteStatus)
         }
+        db.update(
+            DatabaseConstants.BOOK.TABLE_NAME,
+            values,
+            "${DatabaseConstants.BOOK.COLUMNS.ID} = ?",
+            arrayOf(id.toString())
+        )
 
+        // fechando banco de dados
+        db.close()
     }
 
     // Remove um livro pelo ID
