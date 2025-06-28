@@ -110,7 +110,40 @@ class BookRepository private constructor(context: Context) {
 
     // Busca um livro pelo ID
     fun getBookById(id: Int): BookEntity? {
-        return books.find {it.id == id}
+        val db = database.readableDatabase
+
+
+        // listagem para os livros (passo a passo)
+
+        // cursor passando a query (navegando nos dados)
+        val cursor = db.query(
+            DatabaseConstants.BOOK.TABLE_NAME,
+            null,
+            "${DatabaseConstants.BOOK.COLUMNS.ID} = ?",
+            arrayOf(id.toString()),
+            null,
+            null,
+            null)
+
+        var book: BookEntity? = null
+        // criar a lista (verificando se o cursor esta vazio e adicionando valores)
+        if (cursor.moveToFirst()){ // retorna falso se está vazio
+            // dados
+            val id = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseConstants.BOOK.COLUMNS.ID))
+            val title = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseConstants.BOOK.COLUMNS.TITLE))
+            val author = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseConstants.BOOK.COLUMNS.AUTHOR))
+            val genre = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseConstants.BOOK.COLUMNS.GENRE))
+            val favorite: Boolean =  cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseConstants.BOOK.COLUMNS.FAVORITE)) == 1
+
+            book = BookEntity(id, title, author, favorite, genre)
+        }
+
+        // fechar db e cursor
+        cursor.close()
+        db.close()
+
+        // return
+        return book
     }
 
     // Alterna entre true e false o atributo 'favorite'
