@@ -13,7 +13,7 @@ class BookRepository private constructor(context: Context) {
     private var database = BookDatabaseHelper(context)
 
     // Lista mutável que armazena os livros
-    private val books = mutableListOf<BookEntity>()
+    // private val books = mutableListOf<BookEntity>()
 
     // Popula o repositório com os 10 livros iniciais
     //init {
@@ -171,7 +171,15 @@ class BookRepository private constructor(context: Context) {
     // Remove um livro pelo ID
     // (coloca retorno como Booleano para verificação se removeu com sucesso (true) ou nao (false)
     fun deleteBook(id: Int): Boolean {
-        return books.removeIf { it.id == id }
+        val db = database.writableDatabase
+
+        val rowsDeleted = db.delete(
+            DatabaseConstants.BOOK.TABLE_NAME,
+            "${DatabaseConstants.BOOK.COLUMNS.ID} = ?",
+            arrayOf(id.toString())
+        )
+
+        return rowsDeleted > 0
     }
 }
 
