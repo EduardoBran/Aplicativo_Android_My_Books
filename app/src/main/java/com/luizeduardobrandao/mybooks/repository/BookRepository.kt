@@ -2,6 +2,7 @@ package com.luizeduardobrandao.mybooks.repository
 
 import android.content.Context
 import com.luizeduardobrandao.mybooks.entity.BookEntity
+import com.luizeduardobrandao.mybooks.helper.DatabaseConstants
 
 // Classe responsável por armazenar e manipular os livros.
 // (Simula um banco de dados local usando uma lista mutável.)
@@ -14,9 +15,9 @@ class BookRepository private constructor(context: Context) {
     private val books = mutableListOf<BookEntity>()
 
     // Popula o repositório com os 10 livros iniciais
-    init {
-        database.readableDatabase
-    }
+    //init {
+    //    database.readableDatabase
+    //}
 
     // Padrão Singleton ("synchronized" previne que duas requisições cheguem ao mesmo tempo)
     companion object {
@@ -32,8 +33,37 @@ class BookRepository private constructor(context: Context) {
         }
     }
 
-    // Retorna todos os livros armazenados
+    // Retorna todos os livros armazenados pelo banco de dados
     fun getAllBooks(): List<BookEntity>{
+        val db = database.readableDatabase
+        val books = mutableListOf<BookEntity>() // lista a ser preenchida
+
+        // listagem para os livros (passo a passo)
+
+        // cursor passando a query (navegando nos dados)
+        val cursor = db.query(DatabaseConstants.BOOK.TABLE_NAME, null, null, null, null, null, null)
+
+
+
+        // criar a lista (verificando se o cursor esta vazio e adicionando valores)
+        if (cursor.moveToFirst()){ // retorna falso se está vazio
+            do{
+                // dados
+                val id = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseConstants.BOOK.COLUMNS.ID))
+                val title = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseConstants.BOOK.COLUMNS.TITLE))
+                val author = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseConstants.BOOK.COLUMNS.AUTHOR))
+                val genre = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseConstants.BOOK.COLUMNS.GENRE))
+                val favorite: Boolean =  cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseConstants.BOOK.COLUMNS.FAVORITE)) == 1
+
+                books.add(BookEntity(id, title, author, favorite, genre))
+            } while (cursor.moveToNext())
+        }
+
+        // fechar db e cursor
+        cursor.close()
+        db.close()
+
+        // return
         return books
     }
 
