@@ -1,0 +1,178 @@
+New Project < Bottom Navigation Views Activity
+
+- Modificar versão do java em build.gradle.kts
+- buildFeatures já vem como true.
+
+
+A seguir, um guia arquivo-a-arquivo do template Bottom Navigation Activity, mostrando como eles são gerados e se relacionam:
+
+
+*** 1. activity_main.xml (em res/layout/)
+
+<androidx.coordinatorlayout.widget.ConstraintLayout …>
+
+  <!-- 1. BottomNavigationView: menu de abas na parte inferior -->
+  <com.google.android.material.bottomnavigation.BottomNavigationView
+      android:id="@+id/nav_view"
+      app:menu="@menu/bottom_nav_menu"
+      app:labelVisibilityMode="labeled"
+      … />
+      
+  <!-- 2. NavHostFragment: container onde os Fragments serão trocados -->
+  <fragment
+      android:id="@+id/nav_host_fragment"
+      android:name="androidx.navigation.fragment.NavHostFragment"
+      app:navGraph="@navigation/mobile_navigation"
+      app:defaultNavHost="true"
+      … />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+- BottomNavigationView
+
+	- Exibe ícones e rótulos obtidos de res/menu/bottom_nav_menu.xml.
+
+	- Será “linkado” ao NavController para trocar o fragment ativo quando cada item for clicado.
+
+- NavHostFragment
+
+	- É o “frame” que carrega os destinos definidos no grafo de navegação (mobile_navigation.xml).
+
+	- app:defaultNavHost="true" faz com que o botão de “voltar” do sistema seja repassado ao NavController.
+
+
+
+
+*** 2. bottom_nav_menu.xml (em res/menu/)
+
+<menu xmlns:android="…">
+  <item
+      android:id="@+id/navigation_home"
+      android:icon="@drawable/ic_home"
+      android:title="@string/title_home" />
+  <item
+      android:id="@+id/navigation_dashboard"
+      android:icon="@drawable/ic_dashboard"
+      android:title="@string/title_dashboard" />
+  <item
+      android:id="@+id/navigation_notifications"
+      android:icon="@drawable/ic_notifications"
+      android:title="@string/title_notifications" />
+</menu>
+
+- Cada <item> tem o mesmo @id que um <fragment> no grafo.
+
+- Quando o usuário toca num ícone, o NavController navega para o destino com aquele id.
+
+
+
+
+*** 3. mobile_navigation.xml (em res/navigation/)
+
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="…"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.luizeduardobrandao.mybooks.ui.home.HomeFragment"
+        android:label="@string/title_home" />
+
+    <fragment
+        android:id="@+id/navigation_dashboard"
+        android:name="com.luizeduardobrandao.mybooks.ui.dashboard.DashboardFragment"
+        android:label="@string/title_dashboard" />
+
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="com.luizeduardobrandao.mybooks.ui.notifications.NotificationsFragment"
+        android:label="@string/title_notifications" />
+
+</navigation>
+
+- startDestination: fragment carregado assim que o app inicia (aqui, HomeFragment).
+
+- Cada <fragment> mapeia um destino do grafo para a classe de Fragment e seu rótulo.
+
+
+
+
+*** 4. MainActivity.kt (em ui/)
+
+class MainActivity : AppCompatActivity() {
+
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_main)
+
+    // 1. Busca NavController do NavHostFragment
+    val navController = findNavController(R.id.nav_host_fragment)
+    // 2. Liga o BottomNavigationView ao NavController
+    val navView: BottomNavigationView = findViewById(R.id.nav_view)
+    navView.setupWithNavController(navController)
+  }
+}
+
+- findNavController: recupera o controlador de navegação daquele NavHostFragment.
+
+- setupWithNavController: configura o BottomNavigationView para disparar navController.navigate(id) quando o usuário clicar numa aba, e para atualizar o item selecionado quando a navegação ocorrer de outra forma (ex.: via Deep Link).
+
+
+
+
+*** 5. HomeFragment.kt (em ui/home/)
+
+class HomeFragment : Fragment(R.layout.fragment_home) {
+  private val viewModel: HomeViewModel by viewModels()
+  override fun onViewCreated(v: View, s: Bundle?) {
+    // Aqui você pode vincular dados do viewModel às views do fragment_home.xml
+  }
+}
+
+- Herda de Fragment(layoutResId), fazendo o onCreateView automaticamente.
+
+- Usa by viewModels() para criar/injetar seu próprio ViewModel.
+
+- O mesmo padrão vale para DashboardFragment e NotificationsFragment, cada um com seu layout e XxxViewModel.
+
+
+
+
+*** 6. HomeViewModel.kt (em ui/home/)
+
+class HomeViewModel : ViewModel() {
+  // Aqui você expõe LiveData, faz chamadas de repositório, etc.
+}
+
+- Guarda e prepara os dados que o HomeFragment vai exibir.
+
+- Nas demais abas, DashboardViewModel e NotificationsViewModel seguem o mesmo modelo.
+
+
+
+
+**** Fluxo de navegação ****
+
+- App inicia → MainActivity.onCreate() infla activity_main.xml.
+
+- NavHostFragment carrega o destino navigation_home (HomeFragment).
+
+- Usuário toca em “Dashboard” no BottomNavigationView → NavController troca para DashboardFragment.
+
+- ViewModel de cada Fragment segue vivo enquanto o Fragment existir, permitindo manter estado (scroll, dados carregados, etc.).
+
+
+
+
+**** Por que usar esse setup? ****
+
+- Separation of concerns: Activities só cuidam de “onde trocar” (NavHost) e “menu de abas” (BottomNavigationView).
+
+- Fragments isolam cada tela, cada uma com seu próprio ViewModel.
+
+- Navigation Component automatiza transições, back-stack e Deep Links.
+
+
+
+Com isso você tem uma base sólida para crescer seu app em camadas, adicionar Safe Args, animações de transição e testes de navegação.
