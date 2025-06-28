@@ -69,7 +69,43 @@ class BookRepository private constructor(context: Context) {
 
     // Retorna todos os livros marcados como favoritos
     fun getFavoriteBooks(): List<BookEntity> {
-        return books.filter { it.favorite }
+        val db = database.readableDatabase
+        val books = mutableListOf<BookEntity>() // lista a ser preenchida
+
+        // listagem para os livros (passo a passo)
+
+        // cursor passando a query (navegando nos dados)
+        val cursor = db.query(
+            DatabaseConstants.BOOK.TABLE_NAME,
+            null,
+            "${DatabaseConstants.BOOK.COLUMNS.FAVORITE} = ?",
+            arrayOf("1"),
+            null,
+            null,
+            null)
+
+
+
+        // criar a lista (verificando se o cursor esta vazio e adicionando valores)
+        if (cursor.moveToFirst()){ // retorna falso se está vazio
+            do{
+                // dados
+                val id = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseConstants.BOOK.COLUMNS.ID))
+                val title = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseConstants.BOOK.COLUMNS.TITLE))
+                val author = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseConstants.BOOK.COLUMNS.AUTHOR))
+                val genre = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseConstants.BOOK.COLUMNS.GENRE))
+                val favorite: Boolean =  cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseConstants.BOOK.COLUMNS.FAVORITE)) == 1
+
+                books.add(BookEntity(id, title, author, favorite, genre))
+            } while (cursor.moveToNext())
+        }
+
+        // fechar db e cursor
+        cursor.close()
+        db.close()
+
+        // return
+        return books
     }
 
     // Busca um livro pelo ID
