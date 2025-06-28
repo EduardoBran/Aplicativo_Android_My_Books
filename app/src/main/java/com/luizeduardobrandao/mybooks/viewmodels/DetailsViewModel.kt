@@ -1,15 +1,16 @@
 package com.luizeduardobrandao.mybooks.viewmodels
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.luizeduardobrandao.mybooks.entity.BookEntity
 import com.luizeduardobrandao.mybooks.repository.BookRepository
 
-class DetailsViewModel : ViewModel() {
+class DetailsViewModel(application: Application) : AndroidViewModel(application) {
 
     // variável usada para recuperar o valor do id do livro
-    private  val repository: BookRepository = BookRepository.getInstance()
+    private val repository: BookRepository = BookRepository.getInstance(application.applicationContext)
 
     // variável para atribuir o valor do id para um item que pode ser observado
     private val _book = MutableLiveData<BookEntity>()

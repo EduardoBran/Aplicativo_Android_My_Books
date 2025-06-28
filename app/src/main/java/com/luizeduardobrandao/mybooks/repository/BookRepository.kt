@@ -1,10 +1,14 @@
 package com.luizeduardobrandao.mybooks.repository
 
+import android.content.Context
 import com.luizeduardobrandao.mybooks.entity.BookEntity
 
 // Classe responsável por armazenar e manipular os livros.
 // (Simula um banco de dados local usando uma lista mutável.)
-class BookRepository private constructor() {
+class BookRepository private constructor(context: Context) {
+
+    // criando instancio para o banco de dados
+    private var database = BookDatabaseHelper(context)
 
     // Lista mutável que armazena os livros
     private val books = mutableListOf<BookEntity>()
@@ -18,10 +22,10 @@ class BookRepository private constructor() {
     companion object {
         private lateinit var instance: BookRepository
 
-        fun getInstance(): BookRepository {
+        fun getInstance(context: Context): BookRepository {
             synchronized(this) {
                 if (!::instance.isInitialized){
-                    instance = BookRepository()
+                    instance = BookRepository(context)
                 }
             }
             return instance
