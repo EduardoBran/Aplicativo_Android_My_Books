@@ -34,5 +34,5 @@ interface BookDAO {
 
     // inserir todos os livros no momento da criação
     @Insert
-    fun insert(book: BookEntity)
+    fun insert(book: List<BookEntity>)
 }

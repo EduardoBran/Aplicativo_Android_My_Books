@@ -16,8 +16,18 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     // books é o LiveData público, somente leitura para a UI observar
     val books: LiveData<List<BookEntity>> = _books
 
-    // Instância do repositório que fornece os dados (fonte única de verdade)
+
+    // Acesso ao banco de dados
     private val repository = BookRepository.getInstance(application.applicationContext)
+
+    // iniciando lista de livros salva no repositorio
+    init {
+        // controle de fluxos para realizar inserção somente se repositorio for vazio
+        if (repository.getAllBooks().isEmpty()){
+            repository.loadInitialData()
+        }
+    }
+
 
     // Chamada pela UI (HomeFragment) para carregar todos os livros.
     // Ao final, atualiza _books, disparando a notificação a qualquer observador.
