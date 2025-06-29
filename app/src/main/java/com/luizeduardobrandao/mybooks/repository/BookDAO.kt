@@ -30,7 +30,7 @@ interface BookDAO {
 
     // remoção de livros
     @Delete
-    fun delete(book: BookEntity)
+    fun delete(book: BookEntity): Int  // retornar : Int para saber quantos livros foram removidos.
 
     // inserir todos os livros no momento da criação
     @Insert
