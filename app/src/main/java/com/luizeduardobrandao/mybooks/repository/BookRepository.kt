@@ -5,8 +5,7 @@ import android.content.Context
 import com.luizeduardobrandao.mybooks.entity.BookEntity
 import com.luizeduardobrandao.mybooks.helper.DatabaseConstants
 
-// Classe responsável por armazenar e manipular os livros.
-// (Simula um banco de dados local usando uma lista mutável.)
+// Classe responsável por armazenar e manipular os livros via bd.
 class BookRepository private constructor(context: Context) {
 
     // criando instancio para o banco de dados
