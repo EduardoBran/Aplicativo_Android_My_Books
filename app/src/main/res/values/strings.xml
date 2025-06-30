@@ -7,10 +7,9 @@
     <string name="action_search">Pesquisar</string>
     <string name="action_sort">Ordenar</string>
     <string name="hint_search_book">Pesquisar livro...</string>
-    <string name="menu_all">Todos</string>
-    <string name="menu_name">Nome</string>
-    <string name="menu_author">Autor</string>
-    <string name="menu_genre">Gênero</string>
+    <string name="menu_name">Nome (A-Z)</string>
+    <string name="menu_author">Autor (A-Z)</string>
+    <string name="menu_genre">Gênero (A-Z)</string>
     <string name="menu_empty_search">Campo vazio.</string>
     <string name="msg_no_search_results">Nenhum livro foi encontrado.</string>
 

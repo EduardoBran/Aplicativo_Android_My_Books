@@ -110,4 +110,22 @@ class FavoriteFragment : Fragment() {
     fun resetList() {
         favoriteViewModel.getFavoriteBooks()
     }
+
+    // Ordena favoritos já carregados por título (nome).
+    fun sortByName() {
+        val list = favoriteViewModel.books.value.orEmpty()
+        adapter.updateBooks(list.sortedBy { it.title })
+    }
+
+    // Ordena favoritos já carregados por autor.
+    fun sortByAuthor() {
+        val list = favoriteViewModel.books.value.orEmpty()
+        adapter.updateBooks(list.sortedBy { it.author })
+    }
+
+    // Ordena favoritos já carregados por gênero.
+    fun sortByGenre() {
+        val list = favoriteViewModel.books.value.orEmpty()
+        adapter.updateBooks(list.sortedBy { it.genre })
+    }
 }

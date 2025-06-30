@@ -3,6 +3,7 @@ package com.luizeduardobrandao.mybooks.ui
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.PopupMenu
@@ -148,14 +149,40 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_sort -> {
-                // exemplo de PopupMenu; lógica concreta ficará para depois
-                val anchor = binding.toolbar.findViewById<android.view.View>(R.id.action_sort)
-                PopupMenu(this, anchor).apply {
-                    menu.add(getString(R.string.menu_name))
-                    menu.add(getString(R.string.menu_author))
-                    menu.add(getString(R.string.menu_genre))
-                    show()
+                // popup com listener de click
+                val anchor = binding.toolbar.findViewById<View>(R.id.action_sort)
+                val popup = PopupMenu(this, anchor)
+
+                popup.menu.apply {
+                    add(R.string.menu_name)
+                    add(R.string.menu_author)
+                    add(R.string.menu_genre)
                 }
+
+                popup.setOnMenuItemClickListener { menuItem ->
+                    val title = menuItem.title.toString()
+                    // encontra fragment ativo
+                    val current = supportFragmentManager
+                        .findFragmentById(R.id.nav_host_fragment_activity_main)
+                        ?.childFragmentManager
+                        ?.fragments
+                        ?.firstOrNull()
+
+                    when (current) {
+                        is HomeFragment -> when (title){
+                            getString(R.string.menu_name) -> current.sortByName()
+                            getString(R.string.menu_author) -> current.sortByAuthor()
+                            getString(R.string.menu_genre) -> current.sortByGenre()
+                        }
+                        is FavoriteFragment -> when (title) {
+                            getString(R.string.menu_name)   -> current.sortByName()
+                            getString(R.string.menu_author) -> current.sortByAuthor()
+                            getString(R.string.menu_genre)  -> current.sortByGenre()
+                        }
+                    }
+                    true
+                }
+                popup.show()
                 true
             }
             else -> super.onOptionsItemSelected(item)

@@ -127,6 +127,24 @@ class HomeFragment : Fragment() {
         binding.textviewNoResults.visibility = View.GONE
         binding.recyclerviewBooks.visibility = View.VISIBLE
     }
+
+    // Ordena livros já carregados por título (nome).
+    fun sortByName(){
+        val list = homeViewModel.books.value.orEmpty()
+        adapter.updateBooks(list.sortedBy { it.title })
+    }
+
+    // Ordena livros já carregados por autor.
+    fun sortByAuthor() {
+        val list = homeViewModel.books.value.orEmpty()
+        adapter.updateBooks(list.sortedBy { it.author })
+    }
+
+    // Ordena livros já carregados por gênero.
+    fun sortByGenre() {
+        val list = homeViewModel.books.value.orEmpty()
+        adapter.updateBooks(list.sortedBy { it.genre })
+    }
 }
 
 /*
