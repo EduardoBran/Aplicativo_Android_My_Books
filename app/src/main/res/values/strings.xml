@@ -11,6 +11,9 @@
     <string name="menu_name">Nome</string>
     <string name="menu_author">Autor</string>
     <string name="menu_genre">Gênero</string>
+    <string name="menu_empty_search">Campo vazio.</string>
+    <string name="msg_no_search_results">Nenhum livro foi encontrado.</string>
+
 
     <!-- Títulos das telas -->
     <string name="title_home">Home</string>

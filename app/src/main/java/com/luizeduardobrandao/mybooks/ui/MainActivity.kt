@@ -3,7 +3,10 @@ package com.luizeduardobrandao.mybooks.ui
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -77,14 +80,52 @@ class MainActivity : AppCompatActivity() {
         //    - Quando a navegação ocorre por código ou Deep Link,
         //      o item selecionado na barra é atualizado
         navView.setupWithNavController(navController)
+
+        // 8) Ao re-selecionar o item "Home", limpamos o campo de busca e restauramos a lista
+        navView.setOnItemReselectedListener { item ->
+            if (item.itemId == R.id.navigation_home) {
+                // 1) limpa o texto de busca
+                val searchItem = binding.toolbar.menu.findItem(R.id.action_search)
+                val actionView = searchItem.actionView
+                actionView?.findViewById<EditText>(R.id.etSearch)?.setText("")
+
+                // 2) chama reset no HomeFragment
+                val fragment = supportFragmentManager
+                    .findFragmentById(R.id.nav_host_fragment_activity_main)
+                    ?.childFragmentManager
+                    ?.fragments
+                    ?.firstOrNull { it is HomeFragment } as? HomeFragment
+                fragment?.resetList()
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
 
-        // setup do campo de busca
+        // 1) obtém view de action_search
         val searchItem = menu.findItem(R.id.action_search)
         val actionView = searchItem.actionView
+        val etSearch = actionView?.findViewById<EditText>(R.id.etSearch)
+        val btnSearch = actionView?.findViewById<ImageButton>(R.id.btnSearch)
+
+        // 2) ao clicar na lupa, executa busca ou toast se vazio
+        btnSearch?.setOnClickListener {
+            val query = etSearch?.text.toString().trim()
+            if (query.isEmpty()) {
+                Toast.makeText(
+                    this, getString(R.string.menu_empty_search), Toast.LENGTH_SHORT).show()
+            }
+            else {
+                // 3) recupera o HomeFragment e delega
+                val fragment = supportFragmentManager
+                    .findFragmentById(R.id.nav_host_fragment_activity_main)
+                    ?.childFragmentManager
+                    ?.fragments
+                    ?.firstOrNull() { it is HomeFragment } as? HomeFragment
+                fragment?.searchByTitle(query)
+            }
+        }
 
         return true
     }

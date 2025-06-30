@@ -77,8 +77,19 @@ class HomeFragment : Fragment() {
     private fun setObservers() {
 
         // Atualiza a lista de livros exibida pela RecyclerView
-        homeViewModel.books.observe(viewLifecycleOwner){
-            adapter.updateBooks(it)
+        homeViewModel.books.observe(viewLifecycleOwner){ list ->
+            if (list.isEmpty()){
+                // não encontrou nada
+                binding.recyclerviewBooks.visibility = View.GONE
+                binding.textviewNoResults.visibility = View.VISIBLE
+            }
+            else {
+                // encontrou resultados
+                binding.textviewNoResults.visibility = View.GONE
+                binding.recyclerviewBooks.visibility = View.VISIBLE
+                adapter.updateBooks(list)
+            }
+
         }
     }
 
@@ -103,6 +114,18 @@ class HomeFragment : Fragment() {
             }
 
         })
+    }
+
+    // Chamado pela Activity para iniciar a busca.
+    fun searchByTitle(query: String) {
+        homeViewModel.searchByTitle(query)
+    }
+
+    // Restaura a lista completa de livros e esconde a mensagem de "nenhum resultado".
+    fun resetList() {
+        homeViewModel.getAllBooks()
+        binding.textviewNoResults.visibility = View.GONE
+        binding.recyclerviewBooks.visibility = View.VISIBLE
     }
 }
 

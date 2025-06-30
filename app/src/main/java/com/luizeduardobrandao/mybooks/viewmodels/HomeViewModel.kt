@@ -43,4 +43,10 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     fun favorite(id: Int) {
         repository.toggleFavoriteStatus(id)
     }
+
+    // Pesquisa livros cujo título contém 'query' (ignora maiúsc/minúsc).
+    fun searchByTitle(query: String) {
+        _books.value = repository
+            .getAllBooks().filter { it.title.contains(query, ignoreCase = true) }
+    }
 }
