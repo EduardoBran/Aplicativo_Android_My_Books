@@ -85,9 +85,9 @@ class DetailsFragment : Fragment() {
     private fun setListeners() {
 
         // implementando lógica do botão de voltar (também serve para arrastar o dedo para voltar)
-        binding.imageviewBack.setOnClickListener {
-            requireActivity().supportFragmentManager.popBackStack()
-        }
+//        binding.imageviewBack.setOnClickListener {
+//            requireActivity().supportFragmentManager.popBackStack()
+//        }
 
         // Botão "Remover livro" usando função "handleMove()"
         binding.buttonRemove.setOnClickListener { handleRemove() }

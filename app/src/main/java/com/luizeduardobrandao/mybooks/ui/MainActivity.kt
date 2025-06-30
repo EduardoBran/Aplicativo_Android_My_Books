@@ -70,9 +70,17 @@ class MainActivity : AppCompatActivity() {
         //    - Controla a exibição da seta de back
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        // Garante que o título seja sempre "MyBooks"
-        navController.addOnDestinationChangedListener { _, _, _ ->
+        // Garante que o título seja sempre "MyBooks" e edita o Menu em DetailsFragment
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            // título fixo
             supportActionBar?.title = getString(R.string.app_name)
+
+            // seta de back apenas fora de Home e Favoritos
+            val topLevel = setOf(R.id.navigation_home, R.id.navigation_favorite)
+            supportActionBar?.setDisplayHomeAsUpEnabled(!topLevel.contains(destination.id))
+
+            // ⚠️ forçar Android a recriar o menu
+            invalidateOptionsMenu()
         }
 
         // 7. Faz o BottomNavigationView reagir às mudanças de destino:
@@ -153,5 +161,27 @@ class MainActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        // identifica qual tela está ativa
+        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        val destId = navController.currentDestination?.id
+
+        // só mostramos busca e ordenação em HOME e FAVORITOS
+        val visible = destId == R.id.navigation_home || destId == R.id.navigation_favorite
+
+        menu?.findItem(R.id.action_search)?.isVisible = visible
+        menu?.findItem(R.id.action_sort)?.isVisible   = visible
+
+        return super.onPrepareOptionsMenu(menu)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        val handled = navController.navigateUp()
+        // idem: quando clica no back da Toolbar precisa invalidar menu
+        invalidateOptionsMenu()
+        return handled || super.onSupportNavigateUp()
     }
 }
