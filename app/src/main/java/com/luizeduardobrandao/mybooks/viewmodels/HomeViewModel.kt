@@ -33,8 +33,8 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     // Ao final, atualiza _books, disparando a notificação a qualquer observador.
     fun getAllBooks() {
 
-        // Busca a lista de livros no repositório
-        val lista = repository.getAllBooks()
+        // Busca a lista de livros no repositório em ordem alfabética
+        val lista = repository.getAllBooks().sortedBy { it.title }
         // Atribui ao LiveData interno, acionando observers na UI
         _books.value = lista
     }

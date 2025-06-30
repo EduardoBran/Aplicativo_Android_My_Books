@@ -26,8 +26,8 @@ class FavoriteViewModel(application: Application) : AndroidViewModel(application
     // Ao final, atualiza _books, disparando a notificação a qualquer observador.
     fun getFavoriteBooks() {
 
-        // Busca a lista de livros no repositório
-        val lista = repository.getFavoriteBooks()
+        // Busca a lista de livros no repositório em ordem alfabética
+        val lista = repository.getFavoriteBooks().sortedBy { it.title }
         // Atribui ao LiveData interno, acionando observers na UI
         _books.value = lista
     }

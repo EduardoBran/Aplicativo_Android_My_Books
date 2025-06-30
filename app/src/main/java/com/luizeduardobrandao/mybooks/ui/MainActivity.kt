@@ -151,7 +151,6 @@ class MainActivity : AppCompatActivity() {
                 // exemplo de PopupMenu; lógica concreta ficará para depois
                 val anchor = binding.toolbar.findViewById<android.view.View>(R.id.action_sort)
                 PopupMenu(this, anchor).apply {
-                    menu.add(getString(R.string.menu_all))
                     menu.add(getString(R.string.menu_name))
                     menu.add(getString(R.string.menu_author))
                     menu.add(getString(R.string.menu_genre))
