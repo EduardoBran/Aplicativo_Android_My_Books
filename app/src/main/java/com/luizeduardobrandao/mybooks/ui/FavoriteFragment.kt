@@ -100,4 +100,14 @@ class FavoriteFragment : Fragment() {
 
         })
     }
+
+    // Chamado pela Activity para iniciar busca em Favoritos.
+    fun searchByTitle(query: String) {
+        favoriteViewModel.searchByTitle(query)
+    }
+
+    // Restaura lista completa de Favoritos.
+    fun resetList() {
+        favoriteViewModel.getFavoriteBooks()
+    }
 }

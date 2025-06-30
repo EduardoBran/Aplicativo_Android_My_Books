@@ -83,19 +83,22 @@ class MainActivity : AppCompatActivity() {
 
         // 8) Ao re-selecionar o item "Home", limpamos o campo de busca e restauramos a lista
         navView.setOnItemReselectedListener { item ->
-            if (item.itemId == R.id.navigation_home) {
-                // 1) limpa o texto de busca
-                val searchItem = binding.toolbar.menu.findItem(R.id.action_search)
-                val actionView = searchItem.actionView
-                actionView?.findViewById<EditText>(R.id.etSearch)?.setText("")
+            // 1) limpa o texto de busca em qualquer caso
+            val searchItem = binding.toolbar.menu.findItem(R.id.action_search)
+            val actionView = searchItem.actionView
+            actionView?.findViewById<EditText>(R.id.etSearch)?.setText("")
 
-                // 2) chama reset no HomeFragment
-                val fragment = supportFragmentManager
-                    .findFragmentById(R.id.nav_host_fragment_activity_main)
-                    ?.childFragmentManager
-                    ?.fragments
-                    ?.firstOrNull { it is HomeFragment } as? HomeFragment
-                fragment?.resetList()
+            // 2) obtém o fragment ativo
+            val current = supportFragmentManager
+                .findFragmentById(R.id.nav_host_fragment_activity_main)
+                ?.childFragmentManager
+                ?.fragments
+                ?.firstOrNull()
+
+            // 3) chama o reset adequado
+            when (item.itemId) {
+                R.id.navigation_home -> (current as? HomeFragment)?.resetList()
+                R.id.navigation_favorite -> (current as? FavoriteFragment)?.resetList()
             }
         }
     }
@@ -117,13 +120,17 @@ class MainActivity : AppCompatActivity() {
                     this, getString(R.string.menu_empty_search), Toast.LENGTH_SHORT).show()
             }
             else {
-                // 3) recupera o HomeFragment e delega
-                val fragment = supportFragmentManager
+                // 3) delega ao fragment ativo
+                val current = supportFragmentManager
                     .findFragmentById(R.id.nav_host_fragment_activity_main)
                     ?.childFragmentManager
                     ?.fragments
-                    ?.firstOrNull() { it is HomeFragment } as? HomeFragment
-                fragment?.searchByTitle(query)
+                    ?.firstOrNull()
+
+                when (current) {
+                    is HomeFragment -> current.searchByTitle(query)
+                    is FavoriteFragment -> current.searchByTitle(query)
+                }
             }
         }
 

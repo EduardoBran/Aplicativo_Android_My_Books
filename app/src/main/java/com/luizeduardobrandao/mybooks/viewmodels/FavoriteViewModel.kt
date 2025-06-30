@@ -17,6 +17,11 @@ class FavoriteViewModel(application: Application) : AndroidViewModel(application
     // Instância do repositório que fornece os dados (fonte única de verdade)
     private val repository = BookRepository.getInstance(application.applicationContext)
 
+    // carrega lista inicial de favoritos
+    init {
+        getFavoriteBooks()
+    }
+
     // Chamada pela UI (HomeFragment) para carregar os livros favoritos.
     // Ao final, atualiza _books, disparando a notificação a qualquer observador.
     fun getFavoriteBooks() {
@@ -30,5 +35,12 @@ class FavoriteViewModel(application: Application) : AndroidViewModel(application
     // Função para favoritar um livro sem observer()
     fun favorite(id: Int) {
         repository.toggleFavoriteStatus(id)
+    }
+
+    // Filtra favoritos cujo título contém 'query'.
+    fun searchByTitle(query: String) {
+        _books.value = repository
+            .getFavoriteBooks()
+            .filter { it.title.contains(query, ignoreCase = true) }
     }
 }
