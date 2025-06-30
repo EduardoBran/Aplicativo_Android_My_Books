@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.PopupMenu
@@ -129,7 +130,11 @@ class MainActivity : AppCompatActivity() {
                     this, getString(R.string.menu_empty_search), Toast.LENGTH_SHORT).show()
             }
             else {
-                // 3) delega ao fragment ativo
+                // 3) delega ao fragment ativo e fecha teclado
+                etSearch?.clearFocus()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(etSearch?.windowToken, 0)
+
                 val current = supportFragmentManager
                     .findFragmentById(R.id.nav_host_fragment_activity_main)
                     ?.childFragmentManager
