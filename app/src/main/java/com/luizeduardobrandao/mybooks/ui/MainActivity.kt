@@ -1,6 +1,9 @@
 package com.luizeduardobrandao.mybooks.ui
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.PopupMenu
 import androidx.activity.enableEdgeToEdge
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -29,8 +32,8 @@ class MainActivity : AppCompatActivity() {
         // 2. Define a raiz do binding como conteúdo da Activity
         setContentView(binding.root)
 
-        // Esconde a barra superior
-        supportActionBar?.hide()
+        // transforma toolbar em ActionBar
+        setSupportActionBar(binding.toolbar)
 
         // Detectando as bordas do sistema ajusta o top e o bottom
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
@@ -49,9 +52,9 @@ class MainActivity : AppCompatActivity() {
 
         // 4. Encontra o NavController associado ao NavHostFragment
         //    O NavHostFragment é o container que troca os Fragments
+        val navController = findNavController(R.id.nav_host_fragment_activity_main)
 
         // 5. Configura os destinos de topo (não mostrará seta de "voltar" para eles)
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_home,           // HomeFragment
@@ -64,10 +67,43 @@ class MainActivity : AppCompatActivity() {
         //    - Controla a exibição da seta de back
         setupActionBarWithNavController(navController, appBarConfiguration)
 
+        // Garante que o título seja sempre "MyBooks"
+        navController.addOnDestinationChangedListener { _, _, _ ->
+            supportActionBar?.title = getString(R.string.app_name)
+        }
+
         // 7. Faz o BottomNavigationView reagir às mudanças de destino:
         //    - Quando o usuário clica em um item, navega para o Fragment
         //    - Quando a navegação ocorre por código ou Deep Link,
         //      o item selecionado na barra é atualizado
         navView.setupWithNavController(navController)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+
+        // setup do campo de busca
+        val searchItem = menu.findItem(R.id.action_search)
+        val actionView = searchItem.actionView
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_sort -> {
+                // exemplo de PopupMenu; lógica concreta ficará para depois
+                val anchor = binding.toolbar.findViewById<android.view.View>(R.id.action_sort)
+                PopupMenu(this, anchor).apply {
+                    menu.add(getString(R.string.menu_all))
+                    menu.add(getString(R.string.menu_name))
+                    menu.add(getString(R.string.menu_author))
+                    menu.add(getString(R.string.menu_genre))
+                    show()
+                }
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }

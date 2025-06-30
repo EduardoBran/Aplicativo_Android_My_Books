@@ -3,6 +3,15 @@
     <!-- Nome do Aplicativo -->
     <string name="app_name">My Books</string>
 
+    <!-- Menu Toolbar -->
+    <string name="action_search">Pesquisar</string>
+    <string name="action_sort">Ordenar</string>
+    <string name="hint_search_book">Pesquisar livro...</string>
+    <string name="menu_all">Todos</string>
+    <string name="menu_name">Nome</string>
+    <string name="menu_author">Autor</string>
+    <string name="menu_genre">Gênero</string>
+
     <!-- Títulos das telas -->
     <string name="title_home">Home</string>
     <string name="title_favorites">Favoritos</string>

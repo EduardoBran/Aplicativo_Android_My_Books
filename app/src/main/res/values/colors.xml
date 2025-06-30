@@ -11,4 +11,5 @@
     <color name="gold">#FFD700</color>
     <color name="blue">#1E90FF</color>
     <color name="light_red">#FF6347</color>
+    <color name="gray_300">#E0E0E0</color>
 </resources>

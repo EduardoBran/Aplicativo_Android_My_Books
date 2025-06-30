@@ -13,4 +13,7 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+    <style name="Theme.MyBooks.NoActionBar" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- suas customizações de cores, fontes etc -->
+    </style>
 </resources>
