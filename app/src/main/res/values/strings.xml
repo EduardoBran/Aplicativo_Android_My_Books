@@ -34,6 +34,7 @@
     <string name="desc_book_image">Imagem de livros</string>
 
     <!-- Fragment Add Book -->
+    <string name="add_book">Adicionar Livro</string>
     <string name="title_add_book">Título do Livro</string>
     <string name="author_add_book">Autor do Livro</string>
     <string name="genre_add_book">Gênero do Livro</string>

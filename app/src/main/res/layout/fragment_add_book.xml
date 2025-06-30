@@ -1,54 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scroll_add_book"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!-- Título do Fragment -->
         <TextView
+            android:id="@+id/tvAddBookTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/add_book"
+            android:textAppearance="?attr/textAppearanceHeadline5"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Rótulo Título -->
+        <TextView
+            android:id="@+id/tvLabelTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/action_add_book"
-            android:textStyle="bold"/>
+            android:layout_marginTop="32dp"
+            android:text="@string/title_add_book"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvAddBookTitle" />
+
+        <!-- Campo de Título -->
         <EditText
             android:id="@+id/etTitle"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_add_book"/>
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_edit_text_rounded"
+            android:hint="@string/hint_add_book"
+            android:imeOptions="actionNext"
+            android:nextFocusDown="@id/etAuthor"
+            android:padding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvLabelTitle" />
 
+        <!-- Rótulo Autor -->
         <TextView
+            android:id="@+id/tvLabelAuthor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             android:text="@string/author_add_book"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etTitle" />
+
+        <!-- Campo de Autor -->
         <EditText
             android:id="@+id/etAuthor"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_author_add_book"/>
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_edit_text_rounded"
+            android:hint="@string/hint_author_add_book"
+            android:imeOptions="actionNext"
+            android:nextFocusDown="@id/spinnerGenre"
+            android:padding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvLabelAuthor" />
 
+        <!-- Rótulo Gênero -->
         <TextView
+            android:id="@+id/tvLabelGenre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             android:text="@string/genre_add_book"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etAuthor" />
+
+        <!-- Spinner de Gêneros -->
         <Spinner
             android:id="@+id/spinnerGenre"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvLabelGenre" />
 
+        <!-- Botão Salvar -->
         <Button
             android:id="@+id/btnSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="32dp"
+            android:enabled="false"
             android:text="@string/btn_add_book"
-            android:enabled="false"/>
-    </LinearLayout>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/spinnerGenre" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
