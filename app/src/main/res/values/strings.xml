@@ -7,7 +7,7 @@
     <string name="action_search">Pesquisar</string>
     <string name="action_sort">Menu</string>
     <string name="hint_search_book">Pesquisar livro...</string>
-    <string name="action_add_book">Adicionar Livro +</string>
+    <string name="action_add_book">Adicionar Livro</string>
     <string name="menu_name">Nome (A-Z)</string>
     <string name="menu_author">Autor (A-Z)</string>
     <string name="menu_genre">Gênero (A-Z)</string>

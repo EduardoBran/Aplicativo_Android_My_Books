@@ -4,8 +4,10 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.luizeduardobrandao.mybooks.entity.BookEntity
 import com.luizeduardobrandao.mybooks.repository.BookRepository
+import kotlinx.coroutines.launch
 
 class DetailsViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -23,16 +25,22 @@ class DetailsViewModel(application: Application) : AndroidViewModel(application)
     // Função para recuperar o valor passado por HomeFragment (id do livro) usando função
     // "getBooksById" implementada em "BookRepository"
     fun getBooksById(id: Int) {
-        _book.value = repository.getBookById(id)
+        viewModelScope.launch {
+            _book.value = repository.getBookById(id)
+        }
     }
 
     // Função para excluir um livro da lista
     fun deleteBook(id: Int){
-        _bookRemove.value = repository.deleteBook(id)
+        viewModelScope.launch {
+            _bookRemove.value = repository.deleteBook(id)
+        }
     }
 
     // Função para favoritar um livro sem observer()
     fun favorite(id: Int) {
-        repository.toggleFavoriteStatus(id)
+        viewModelScope.launch {
+            repository.toggleFavoriteStatus(id)
+        }
     }
 }

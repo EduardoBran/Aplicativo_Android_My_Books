@@ -3,44 +3,44 @@ package com.luizeduardobrandao.mybooks.viewmodels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.luizeduardobrandao.mybooks.entity.BookEntity
 import com.luizeduardobrandao.mybooks.repository.BookRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.map
 
 class FavoriteViewModel(application: Application) : AndroidViewModel(application) {
-
-    // _books é o MutableLiveData interno, permitimos mutação apenas aqui
-    private val _books = MutableLiveData<List<BookEntity>>()
-    // books é o LiveData público, somente leitura para a UI observar
-    val books: LiveData<List<BookEntity>> = _books
 
     // Instância do repositório que fornece os dados (fonte única de verdade)
     private val repository = BookRepository.getInstance(application.applicationContext)
 
-    // carrega lista inicial de favoritos
-    init {
-        getFavoriteBooks()
-    }
+    // controla o texto de busca (null ou vazio = sem filtro)
+    private val _query = MutableStateFlow<String?>(null)
 
-    // Chamada pela UI (HomeFragment) para carregar os livros favoritos.
-    // Ao final, atualiza _books, disparando a notificação a qualquer observador.
-    fun getFavoriteBooks() {
+    // toda vez que o Flow de favoritos ou _query mudar, reemitimos a lista corretamente filtrada e ordenada
+    val books: LiveData<List<BookEntity>> = _query
+        .flatMapLatest { q ->
+            repository
+                .getFavoriteBooks()       // Flow<List<BookEntity>>
+                .map { list ->
+                    // ordena antes de filtrar
+                    val sorted = list.sortedBy { it.title }
+                    if (q.isNullOrBlank()) sorted
+                    else sorted.filter { it.title.contains(q, ignoreCase = true) }
+                }
+        }
+        .asLiveData()
 
-        // Busca a lista de livros no repositório em ordem alfabética
-        val lista = repository.getFavoriteBooks().sortedBy { it.title }
-        // Atribui ao LiveData interno, acionando observers na UI
-        _books.value = lista
-    }
-
-    // Função para favoritar um livro sem observer()
-    fun favorite(id: Int) {
+    // Marca/desmarca favorito
+    fun favorite(id: Int) = viewModelScope.launch {
         repository.toggleFavoriteStatus(id)
     }
 
-    // Filtra favoritos cujo título contém 'query'.
-    fun searchByTitle(query: String) {
-        _books.value = repository
-            .getFavoriteBooks()
-            .filter { it.title.contains(query, ignoreCase = true) }
+    // Atualiza o filtro de busca; null ou "" = sem filtro
+    fun searchByTitle(query: String?) {
+        _query.value = query
     }
 }

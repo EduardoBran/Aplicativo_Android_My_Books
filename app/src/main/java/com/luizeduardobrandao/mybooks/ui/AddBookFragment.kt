@@ -54,16 +54,18 @@ class AddBookFragment: Fragment() {
                 override fun onNothingSelected(parent: android.widget.AdapterView<*>) {}
             }
 
-        // salvar
+        // 1) dispara o salvamento
         binding.btnSave.setOnClickListener {
             val title = binding.etTitle.text.toString().trim()
-            val author= binding.etAuthor.text.toString().trim()
+            val author = binding.etAuthor.text.toString().trim()
             val genre = binding.spinnerGenre.selectedItem as String
+            viewModel.saveBook(title, author, genre)
+        }
 
-            val ok = viewModel.saveBook(title, author, genre)
-            if (ok) {
+        // 2) observa o resultado
+        viewModel.saveResult.observe(viewLifecycleOwner) { success ->
+            if (success) {
                 Toast.makeText(requireContext(), "Livro salvo!", Toast.LENGTH_SHORT).show()
-                // volta e força refresh na Home
                 findNavController().popBackStack()
             } else {
                 Toast.makeText(requireContext(), "Erro ao salvar", Toast.LENGTH_SHORT).show()

@@ -48,12 +48,6 @@ class FavoriteFragment : Fragment() {
         return binding.root
     }
 
-    override fun onResume() {
-        super.onResume()
-        // 5) Solicita ao ViewModel que busque todos os livros
-        favoriteViewModel.getFavoriteBooks()
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -92,10 +86,8 @@ class FavoriteFragment : Fragment() {
             }
 
             override fun onFavoriteClick(id: Int) {
-                // clique para favoritar o livro
+                // só chama o toggle; o Flow emite a nova lista automaticamente
                 favoriteViewModel.favorite(id)
-                // atualiza a listagem com o livro marcado como favorito
-                favoriteViewModel.getFavoriteBooks()
             }
 
         })
@@ -108,7 +100,7 @@ class FavoriteFragment : Fragment() {
 
     // Restaura lista completa de Favoritos.
     fun resetList() {
-        favoriteViewModel.getFavoriteBooks()
+        favoriteViewModel.searchByTitle(null)
     }
 
     // Ordena favoritos já carregados por título (nome).

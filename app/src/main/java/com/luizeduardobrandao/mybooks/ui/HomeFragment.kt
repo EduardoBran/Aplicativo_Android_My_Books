@@ -4,10 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.luizeduardobrandao.mybooks.R
@@ -53,17 +51,11 @@ class HomeFragment : Fragment() {
         // 4) Função para Navegação
         attachListener()
 
-        // 6) Define observadores para reagir a mudanças nos dados
+        // 5) Define observadores para reagir a mudanças nos dados
         setObservers()
 
-        // 7) Retorna a raiz inflada para ser exibida
+        // 6) Retorna a raiz inflada para ser exibida
         return binding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
-        // 5) Solicita ao ViewModel que busque todos os livros
-        homeViewModel.getAllBooks()
     }
 
     // Quando a view do fragmento é destruída, limpamos o binding para evitar vazamentos de memória.
@@ -76,56 +68,43 @@ class HomeFragment : Fragment() {
     // Sempre que a lista de livros for atualizada, atualiza os dados do adapter
     private fun setObservers() {
 
-        // Atualiza a lista de livros exibida pela RecyclerView
-        homeViewModel.books.observe(viewLifecycleOwner){ list ->
-            if (list.isEmpty()){
-                // não encontrou nada
+        // observa o LiveData< List<BookEntity> >
+        homeViewModel.books.observe(viewLifecycleOwner) { list ->
+            if (list.isEmpty()) {
                 binding.recyclerviewBooks.visibility = View.GONE
                 binding.textviewNoResults.visibility = View.VISIBLE
-            }
-            else {
-                // encontrou resultados
+            } else {
                 binding.textviewNoResults.visibility = View.GONE
                 binding.recyclerviewBooks.visibility = View.VISIBLE
                 adapter.updateBooks(list)
             }
-
         }
     }
 
     // Função para navegação  (clicar em object para implementar os membros)
     private fun attachListener() {
-        adapter.attachListener(object: BookListener{
+        // listener de clique em item de lista
+        adapter.attachListener(object : BookListener {
             override fun onClick(id: Int) {
-
-                // navegação passando o ID do livro como parametro
-                val bundle = Bundle()
-                bundle.putInt(BookConstants.KEY.BOOK_ID, id)
-
-                // navegação
+                val bundle = Bundle().apply {
+                    putInt(BookConstants.KEY.BOOK_ID, id)
+                }
                 findNavController().navigate(R.id.navigation_details, bundle)
             }
-
             override fun onFavoriteClick(id: Int) {
-                // clique para favoritar o livro
                 homeViewModel.favorite(id)
-                // atualiza a listagem com o livro marcado como favorito
-                homeViewModel.getAllBooks()
             }
-
         })
     }
 
     // Chamado pela Activity para iniciar a busca.
     fun searchByTitle(query: String) {
-        homeViewModel.searchByTitle(query)
+        homeViewModel.searchByTitle(query.takeIf { it.isNotBlank() })
     }
 
     // Restaura a lista completa de livros e esconde a mensagem de "nenhum resultado".
     fun resetList() {
-        homeViewModel.getAllBooks()
-        binding.textviewNoResults.visibility = View.GONE
-        binding.recyclerviewBooks.visibility = View.VISIBLE
+        homeViewModel.searchByTitle(null)
     }
 
     // Ordena livros já carregados por título (nome).
