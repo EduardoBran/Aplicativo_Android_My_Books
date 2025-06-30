@@ -149,36 +149,47 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_sort -> {
-                // popup com listener de click
                 val anchor = binding.toolbar.findViewById<View>(R.id.action_sort)
-                val popup = PopupMenu(this, anchor)
+                val popup  = PopupMenu(this, anchor)
 
-                popup.menu.apply {
-                    add(R.string.menu_name)
-                    add(R.string.menu_author)
-                    add(R.string.menu_genre)
-                }
+                // 1) Adicionar Livro + (usa o ID que criamos em ids.xml)
+                popup.menu.add(
+                    Menu.NONE,
+                    R.id.action_add,
+                    Menu.NONE,
+                    getString(R.string.action_add_book)
+                )
+                // 2) Nome (A–Z)
+                popup.menu.add(Menu.NONE, R.id.sort_name, Menu.NONE, getString(R.string.menu_name))
+                // 3) Autor (A–Z)
+                popup.menu.add(Menu.NONE, R.id.sort_author, Menu.NONE, getString(R.string.menu_author))
+                // 4) Gênero (A–Z)
+                popup.menu.add(Menu.NONE, R.id.sort_genre, Menu.NONE, getString(R.string.menu_genre))
 
-                popup.setOnMenuItemClickListener { menuItem ->
-                    val title = menuItem.title.toString()
-                    // encontra fragment ativo
+                popup.setOnMenuItemClickListener { mi ->
+                    // recupera fragment ativo
                     val current = supportFragmentManager
                         .findFragmentById(R.id.nav_host_fragment_activity_main)
                         ?.childFragmentManager
                         ?.fragments
                         ?.firstOrNull()
 
-                    when (current) {
-                        is HomeFragment -> when (title){
-                            getString(R.string.menu_name) -> current.sortByName()
-                            getString(R.string.menu_author) -> current.sortByAuthor()
-                            getString(R.string.menu_genre) -> current.sortByGenre()
-                        }
-                        is FavoriteFragment -> when (title) {
-                            getString(R.string.menu_name)   -> current.sortByName()
-                            getString(R.string.menu_author) -> current.sortByAuthor()
-                            getString(R.string.menu_genre)  -> current.sortByGenre()
-                        }
+                    when (mi.itemId) {
+                        R.id.action_add ->
+                            findNavController(R.id.nav_host_fragment_activity_main)
+                                .navigate(R.id.navigation_add_book)
+
+                        R.id.sort_name ->
+                            if (current is HomeFragment) current.sortByName()
+                            else if (current is FavoriteFragment) current.sortByName()
+
+                        R.id.sort_author ->
+                            if (current is HomeFragment) current.sortByAuthor()
+                            else if (current is FavoriteFragment) current.sortByAuthor()
+
+                        R.id.sort_genre ->
+                            if (current is HomeFragment) current.sortByGenre()
+                            else if (current is FavoriteFragment) current.sortByGenre()
                     }
                     true
                 }

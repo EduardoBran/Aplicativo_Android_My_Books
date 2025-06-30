@@ -9,7 +9,13 @@
         app:actionLayout="@layout/action_search"
         app:showAsAction="always"/>
 
-    <!-- ordenação -->
+<!--    <item-->
+<!--        android:id="@+id/action_add"-->
+<!--        android:icon="@drawable/ic_add"-->
+<!--        android:title="@string/action_add_book"-->
+<!--        app:showAsAction="always"/>-->
+
+    <!-- menu -->
     <item
         android:id="@+id/action_sort"
         android:title="@string/action_sort"

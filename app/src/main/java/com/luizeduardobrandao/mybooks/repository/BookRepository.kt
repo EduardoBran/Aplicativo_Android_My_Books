@@ -179,4 +179,15 @@ class BookRepository private constructor(context: Context) {
         val book = getBookById(id)
         return dataBase.delete(book) > 0
     }
+
+    // Insere um livro e retorna true se OK
+    fun addBook(title: String, author: String, genre: String): Boolean {
+        // calcula próximo ID único
+        val all = getAllBooks()
+        val nextId = (all.maxOfOrNull { it.id } ?: 0) + 1
+        // adiciona livro
+        val book = BookEntity(nextId, title, author, false, genre)
+        dataBase.insertOne(book)
+        return true
+    }
 }

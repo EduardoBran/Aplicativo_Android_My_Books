@@ -23,4 +23,10 @@
         android:label="@string/title_book_details"
         tools:layout="@layout/fragment_details" />
 
+    <fragment
+        android:id="@+id/navigation_add_book"
+        android:name="com.luizeduardobrandao.mybooks.ui.AddBookFragment"
+        android:label="Adicionar Livro"
+        tools:layout="@layout/fragment_add_book" />
+
 </navigation>

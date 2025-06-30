@@ -5,8 +5,9 @@
 
     <!-- Menu Toolbar -->
     <string name="action_search">Pesquisar</string>
-    <string name="action_sort">Ordenar</string>
+    <string name="action_sort">Menu</string>
     <string name="hint_search_book">Pesquisar livro...</string>
+    <string name="action_add_book">Adicionar Livro +</string>
     <string name="menu_name">Nome (A-Z)</string>
     <string name="menu_author">Autor (A-Z)</string>
     <string name="menu_genre">Gênero (A-Z)</string>
@@ -31,4 +32,15 @@
     <!-- Botões e descrições -->
     <string name="button_remove_book">Remover livro</string>
     <string name="desc_book_image">Imagem de livros</string>
+
+    <!-- Fragment Add Book -->
+    <string name="title_add_book">Título do Livro</string>
+    <string name="author_add_book">Autor do Livro</string>
+    <string name="genre_add_book">Gênero do Livro</string>
+    <string name="btn_add_book">Salvar Livro</string>
+
+    <string name="hint_add_book">Digite o título</string>
+    <string name="hint_author_add_book">Digite o autor</string>
+
+
 </resources>

@@ -35,4 +35,8 @@ interface BookDAO {
     // inserir todos os livros no momento da criação
     @Insert
     fun insert(book: List<BookEntity>)
+
+    // inserir um único livro
+    @Insert
+    fun insertOne(book: BookEntity): Long
 }

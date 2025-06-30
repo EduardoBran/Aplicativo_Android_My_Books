@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="genres_array">
+        <item>Aventura</item>
+        <item>Contos</item>
+        <item>Distopia</item>
+        <item>Fantasia</item>
+        <item>Ficção</item>
+        <item>Infantil</item>
+        <item>Mistério</item>
+        <item>Romance</item>
+    </string-array>
+</resources>

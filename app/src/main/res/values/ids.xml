@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="action_add"   type="id"/>
+    <item name="sort_name"    type="id"/>
+    <item name="sort_author"  type="id"/>
+    <item name="sort_genre"   type="id"/>
+</resources>
